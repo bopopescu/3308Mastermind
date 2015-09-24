@@ -12,3 +12,4 @@ On the playground is where I spent most of my days
 Rachel Lewis
 Thomas Trieu
 Timothy Romanowski
+Sonia Szeton
