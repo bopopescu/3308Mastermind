@@ -3,20 +3,25 @@ from graphics import *
 def board():
 	# background
 	win = GraphWin("My Rectangle", 800, 600)
-        r = Rectangle(Point(50, 25), Point(350, 550))
+        # actual game board
+	r = Rectangle(Point(50, 25), Point(350, 550))
         r.draw(win)
         r.setFill(color_rgb(204, 102, 0))
+	# "cover" of the solution at the bottom
 	cover = Rectangle (Point(70, 525), Point(210, 550))
         cover.draw(win)
         cover.setFill(color_rgb(0, 153, 76))
+	# loops to make all of the peg holes on the board
 	i = 0
 	while i < 12:
 		j = 0
 		while j < 4:
+			# bigger pegs to put guesses in
 			p = Circle(Point(80 + 40*j, 55 + 40*i), 10)
 			p.draw(win)
 			p.setFill(color_rgb(102, 51, 0))
 			j = j + 1
+		# smaller pegs to indicate correctness of the guess
 		s1 = Circle(Point(225, 62 + 40*i), 5)
 		s1.draw(win)
 		s1.setFill(color_rgb(102, 51, 0))
@@ -30,6 +35,7 @@ def board():
                 s3.draw(win)
                 s3.setFill(color_rgb(102, 51, 0))
 		i = i + 1
+	# peg options to the left of the holes
 	o1 = Circle(Point(280, 490), 10)
 	o1.draw(win)
 	o1.setFill('red')
@@ -54,6 +60,10 @@ def board():
 	o8 = Circle(Point(310, 400), 10)
 	o8.draw(win)
 	o8.setFill('brown')
+	# button to submit guess
+	b = Rectangle(Point(270, 340), Point(320, 360))
+	b.draw(win)
+	b.setFill('white')
         win.getMouse() # pause for click in window
         win.close()
 	
