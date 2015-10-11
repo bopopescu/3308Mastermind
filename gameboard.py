@@ -1,9 +1,19 @@
 from graphics import *
 
-def board():
-	# background
-	win = GraphWin("My Rectangle", 800, 600)
-        # actual game board
+def functionality(win, e):
+	# takes in win (graphic) and e (exit button)
+
+	# functionality to close window when "Exit" button is clicked
+        while True:
+                mouse = win.getMouse() # pause for click in "Exit" button
+                if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
+                        win.close()
+                        break
+
+def board(win):
+        # takes in win (graphic) and returns e (exit button)
+
+	# actual game board
 	r = Rectangle(Point(50, 25), Point(350, 550))
         r.draw(win)
         r.setFill(color_rgb(204, 102, 0))
@@ -72,16 +82,12 @@ def board():
 	e.setFill('white')
 	e2 = Text(Point(295, 60), "Exit")
 	e2.draw(win)
-	# functionality to wait until the "Exit" button is clicked to close the window
-	while True:
-        	mouse = win.getMouse() # pause for click in "Exit" button
-        	if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
-			win.close()
-			break
+	return e
 	
-
 def main():
-	board()
+        win = GraphWin("My Rectangle", 800, 600)
+	e = board(win)
+	functionality(win, e)
 
 main()
 
