@@ -64,8 +64,20 @@ def board():
 	b = Rectangle(Point(270, 340), Point(320, 360))
 	b.draw(win)
 	b.setFill('white')
-        win.getMouse() # pause for click in window
-        win.close()
+	b2 = Text(Point(295, 350), "Check")
+	b2.draw(win)
+	# button to exit the window
+	e = Rectangle(Point(270, 50), Point(320, 70))
+	e.draw(win)
+	e.setFill('white')
+	e2 = Text(Point(295, 60), "Exit")
+	e2.draw(win)
+	# functionality to wait until the "Exit" button is clicked to close the window
+	while True:
+        	mouse = win.getMouse() # pause for click in "Exit" button
+        	if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
+			win.close()
+			break
 	
 
 def main():
