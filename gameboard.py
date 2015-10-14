@@ -1,29 +1,13 @@
 from graphics import *
 
-
-class Playboard(object):
-    def __init__(self, rows, cols):
-        self.rows = 12
-        self.cols = 4
-        # initialize array and fill with zeroes
-        self.data = [[0 for _ in range(cols)] for _ in range(rows)]
-
-    def __iter__(self):
-        for row in self.data:
-            yield row
-
-    def __repr__(self):
-        return 'Array(%d, %d)' % (self.rows, self.cols)
-
-
+#class for each playable slot
 class Pegslot(Circle):
     def __init__(self):
         self.location = 0
-
     def setColor(self, color):
         self.setFill(color)
 
-
+#create global playboard which is an 2d list of all playable slots
 playboard = [[Pegslot() for i in range(4)] for j in range(12)]
 
 def functionality(win, e):
@@ -113,9 +97,8 @@ def board(win):
 
 
 def main():
-    win = GraphWin("Mastermind", 800, 600)
+    win = GraphWin("Mastermind", 400, 600)
     e = board(win)
-    print(win.items)
     functionality(win, e)
 
 
