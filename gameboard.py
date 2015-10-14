@@ -1,6 +1,31 @@
 from graphics import *
 
 
+class Playboard(object):
+    def __init__(self, rows, cols):
+        self.rows = 12
+        self.cols = 4
+        # initialize array and fill with zeroes
+        self.data = [[0 for _ in range(cols)] for _ in range(rows)]
+
+    def __iter__(self):
+        for row in self.data:
+            yield row
+
+    def __repr__(self):
+        return 'Array(%d, %d)' % (self.rows, self.cols)
+
+
+class Pegslot(Circle):
+    def __init__(self):
+        self.location = 0
+
+    def setColor(self, color):
+        self.setFill(color)
+
+
+playboard = [[Pegslot() for i in range(4)] for j in range(12)]
+
 def functionality(win, e):
     # takes in win (graphic) and e (exit button)
 
@@ -29,9 +54,9 @@ def board(win):
         j = 0
         while j < 4:
             # bigger pegs to put guesses in
-            p = Circle(Point(80 + 40 * j, 55 + 40 * i), 10)
-            p.draw(win)
-            p.setFill(color_rgb(102, 51, 0))
+            playboard[i][j] = Circle(Point(80 + 40 * j, 55 + 40 * i), 10)
+            playboard[i][j].draw(win)
+            playboard[i][j].setFill(color_rgb(102, 51, 0))
             j = j + 1
         # smaller pegs to indicate correctness of the guess
         s1 = Circle(Point(225, 62 + 40 * i), 5)
@@ -90,6 +115,7 @@ def board(win):
 def main():
     win = GraphWin("Mastermind", 800, 600)
     e = board(win)
+    print(win.items)
     functionality(win, e)
 
 
