@@ -10,17 +10,50 @@ class Pegslot(Circle):
 #create global playboard which is an 2d list of all playable slots
 playboard = [[Pegslot() for i in range(4)] for j in range(12)]
 
+#after the user clicks a color, it will set this variable
+activeColor = color_rgb(102, 51, 0)
+redPeg = greenPeg = bluePeg = yellowPeg = orangePeg = whitePeg = brownPeg = blackPeg = Pegslot
+
+
 def functionality(win, e):
     # takes in win (graphic) and e (exit button)
+    global activeColor
 
-    # functionality to close window when "Exit" button is clicked
+    # functionality to close window when a button is clicked
     while True:
         mouse = win.getMouse()  # pause for click in "Exit" button
+        #check to see if clicked inside of a playable peg slot
         for i in range(12):
             for j in range(4):
-                if (playboard[i][j].p1.x < mouse.x and playboard[i][j].p1.y  < mouse.y) and\
+                if (playboard[i][j].p1.x < mouse.x and playboard[i][j].p1.y < mouse.y) and\
                         (playboard[i][j].p2.x > mouse.x and playboard[i][j].p2.y > mouse.y):
-                    playboard[i][j].setFill(color_rgb(0,0,255))
+                    playboard[i][j].setFill(activeColor)
+        #check to see if clicked in color selection
+        if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
+                        (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
+                    activeColor = 'red'
+        if (greenPeg.p1.x < mouse.x and greenPeg.p1.y < mouse.y) and\
+                        (greenPeg.p2.x > mouse.x and greenPeg.p2.y > mouse.y):
+                    activeColor = 'green'
+        if (bluePeg.p1.x < mouse.x and bluePeg.p1.y < mouse.y) and\
+                        (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
+                    activeColor = 'blue'
+        if (yellowPeg.p1.x < mouse.x and yellowPeg.p1.y < mouse.y) and\
+                        (yellowPeg.p2.x > mouse.x and yellowPeg.p2.y > mouse.y):
+                    activeColor = 'yellow'
+        if (orangePeg.p1.x < mouse.x and orangePeg.p1.y < mouse.y) and\
+                        (orangePeg.p2.x > mouse.x and orangePeg.p2.y > mouse.y):
+                    activeColor = 'orange'
+        if (whitePeg.p1.x < mouse.x and whitePeg.p1.y < mouse.y) and\
+                        (whitePeg.p2.x > mouse.x and whitePeg.p2.y > mouse.y):
+                    activeColor = 'white'
+        if (brownPeg.p1.x < mouse.x and brownPeg.p1.y < mouse.y) and\
+                        (brownPeg.p2.x > mouse.x and brownPeg.p2.y > mouse.y):
+                    activeColor = 'brown'
+        if (blackPeg.p1.x < mouse.x and blackPeg.p1.y < mouse.y) and\
+                        (blackPeg.p2.x > mouse.x and blackPeg.p2.y > mouse.y):
+                    activeColor = 'black'
+        #check to see if clicked on exit box
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
             win.close()
             break
@@ -28,6 +61,7 @@ def functionality(win, e):
 
 def board(win):
     # takes in win (graphic) and returns e (exit button)
+    global redPeg, greenPeg, bluePeg, yellowPeg, orangePeg, whitePeg, brownPeg, blackPeg
 
     # actual game board
     r = Rectangle(Point(50, 25), Point(350, 550))
@@ -62,30 +96,30 @@ def board(win):
         s3.setFill(color_rgb(102, 51, 0))
         i = i + 1
     # peg options to the left of the holes
-    o1 = Circle(Point(280, 490), 10)
-    o1.draw(win)
-    o1.setFill('red')
-    o2 = Circle(Point(310, 490), 10)
-    o2.draw(win)
-    o2.setFill('green')
-    o3 = Circle(Point(280, 460), 10)
-    o3.draw(win)
-    o3.setFill('blue')
-    o4 = Circle(Point(310, 460), 10)
-    o4.draw(win)
-    o4.setFill('yellow')
-    o5 = Circle(Point(280, 430), 10)
-    o5.draw(win)
-    o5.setFill('orange')
-    o6 = Circle(Point(310, 430), 10)
-    o6.draw(win)
-    o6.setFill('white')
-    o7 = Circle(Point(280, 400), 10)
-    o7.draw(win)
-    o7.setFill('black')
-    o8 = Circle(Point(310, 400), 10)
-    o8.draw(win)
-    o8.setFill('brown')
+    redPeg = Circle(Point(280, 490), 10)
+    redPeg.draw(win)
+    redPeg.setFill('red')
+    greenPeg = Circle(Point(310, 490), 10)
+    greenPeg.draw(win)
+    greenPeg.setFill('green')
+    bluePeg = Circle(Point(280, 460), 10)
+    bluePeg.draw(win)
+    bluePeg.setFill('blue')
+    yellowPeg = Circle(Point(310, 460), 10)
+    yellowPeg.draw(win)
+    yellowPeg.setFill('yellow')
+    orangePeg = Circle(Point(280, 430), 10)
+    orangePeg.draw(win)
+    orangePeg.setFill('orange')
+    whitePeg = Circle(Point(310, 430), 10)
+    whitePeg.draw(win)
+    whitePeg.setFill('white')
+    blackPeg = Circle(Point(280, 400), 10)
+    blackPeg.draw(win)
+    blackPeg.setFill('black')
+    brownPeg = Circle(Point(310, 400), 10)
+    brownPeg.draw(win)
+    brownPeg.setFill('brown')
     # button to submit guess
     b = Rectangle(Point(270, 340), Point(320, 360))
     b.draw(win)
