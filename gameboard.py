@@ -3,7 +3,7 @@ from graphics import *
 #class for each playable slot
 class Pegslot(Circle):
     def __init__(self):
-        self.location = 0
+        location = 0
     def setColor(self, color):
         self.setFill(color)
 
@@ -16,6 +16,13 @@ def functionality(win, e):
     # functionality to close window when "Exit" button is clicked
     while True:
         mouse = win.getMouse()  # pause for click in "Exit" button
+        for i in range(12):
+            for j in range(4):
+                if (abs(playboard[i][j].p1.x - mouse.x) < playboard[i][j].radius and\
+                                abs(playboard[i][j].p1.y - mouse.y) < playboard[i][j].radius) or\
+                    (abs(playboard[i][j].p2.x - mouse.x) < playboard[i][j].radius and\
+                                abs(playboard[i][j].p2.y - mouse.y) < playboard[i][j].radius):
+                    playboard[i][j].setFill(color_rgb(0,0,255))
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
             win.close()
             break
