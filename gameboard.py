@@ -1,8 +1,10 @@
 from graphics import *
+from menu import *
 
 #class for each playable slot
 class Pegslot(Circle):
     def __init__(self):
+		
         location = 0
     def setColor(self, color):
         self.setFill(color)
@@ -136,6 +138,7 @@ def board(win):
 
 
 def main():
+    gameParam = menufunctionality()
     win = GraphWin("Mastermind", 400, 600)
     e = board(win)
     functionality(win, e)
