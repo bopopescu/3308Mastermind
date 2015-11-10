@@ -5,6 +5,7 @@ from enum import Enum
 
 # enumerated type to create the colored pegs
 class Peg(Enum):
+    matched = -1
     empty = 0
     red = 1
     orange = 2
@@ -26,26 +27,24 @@ def generateCode():
     return code
 
 # Scores guess by comparing guess to code using loops
-# Has some bugs when assigning white pins with duplicates
 def scoreGuess(guess,code) :
+    guess = guess[:] # copy the guesses since we are going to pull out the matches
     score = []
+
     for j in range(4) :
+        # first check for an exact match
+        if code[j] == guess[j] :
+            score.append(Pin.black)
+            guess[j] = Peg.matched
+            continue # Done with this peg index in the code
+        # then check for a match in the wrong position
         for k in range(4) :
-            if j == k and guess[j] == code[k] :
-                score.append(Pin.black)
-                break
-            elif j != k and guess[j] == code[k]:
+            # if they do match, we must make sure the guess doesn't also match a
+            # future code pin in the same position!
+            if code[j] == guess[k] and code[k] != guess[k] :
                 score.append(Pin.white)
-                break
-    return score    #TODO: need to randomize score
+                guess[k] = Peg.matched
+                break # Done with this peg index in the code
 
-code = generateCode()
-guess = generateCode()
-score = scoreGuess(guess,code)
+    return score
 
-print("Code is: ")
-print(code)
-print("Guess is: ")
-print(guess)
-print("score is: ")
-print(score)
