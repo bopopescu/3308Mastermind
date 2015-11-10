@@ -65,6 +65,7 @@ def menufunctionality():
 			and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
 		    name.undraw()
 		    play2.draw(menu)
+		    warn.undraw()
 		    settings2.setText('Settings')
 		    quit2.setText('Quit Game')
 		    break
