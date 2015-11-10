@@ -127,9 +127,10 @@ def board(win):
 
 def main():
     gameParam = menufunctionality()
-    win = GraphWin("Mastermind", 400, 600)
-    e = board(win)
-    functionality(win, e)
+    if (gameParam.quitting != 1):
+        win = GraphWin("Mastermind", 400, 600)
+        e = board(win)
+        functionality(win, e)
 
 
 main()

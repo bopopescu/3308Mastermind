@@ -4,10 +4,13 @@ class GameParam():
     def __init__(self):
 	self.user = 'default'
 	self.difficulty = 1
+	self.quitting = 0
     def setUser(self, user):
 	self.user = user
     def setDifficulty(self, difficulty):
 	self.difficulty = difficulty
+    def setQuitting(self):
+	self.quitting = 1
 
 def menufunctionality():
     # Creates separate GraphWin object for menu
@@ -31,6 +34,7 @@ def menufunctionality():
     quit2 = Text(Point(200, 485), 'Quit Game')
     quit2.draw(menu)
     # Initiate GameParam object
+    # To be returned to gameboard.py, detailing user settings
     param = GameParam()
     # Gets mouse input 
     while True:
@@ -115,5 +119,6 @@ def menufunctionality():
 	    continue
 	if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
 		and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
+	    param.setQuitting()
 	    menu.close()
-	    break
+	    return param
