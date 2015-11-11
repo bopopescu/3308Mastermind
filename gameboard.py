@@ -1,5 +1,6 @@
 from graphics import *
 from menu import *
+from mastermind_alg import *
 
 #class for each playable slot
 class Pegslot(Circle):
@@ -11,6 +12,7 @@ class Pegslot(Circle):
 
 #create global playboard which is an 2d list of all playable slots
 playboard = [[Pegslot() for i in range(4)] for j in range(12)]
+# create global guessboard which is a 2d list of all slots to show correctness
 guessboard = [[Pegslot() for i in range(4)] for j in range(12)]
 
 #after the user clicks a color, it will set this variable
@@ -55,7 +57,7 @@ def functionality(win, e):
             win.close()
             break
 
-
+# sets up board graphics
 def board(win):
     # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
@@ -131,10 +133,17 @@ def board(win):
 
 
 def main():
+    code = generateCode()
+    # Initiates the menu
     gameParam = menufunctionality()
+    # If the user did not click the quit button in the menu
     if (gameParam.quitting != 1):
+        # setting up window for the game
         win = GraphWin("Mastermind", 400, 600)
+        # takes the window and creates the board
+        # returns the exit button
         e = board(win)
+        # the functionality takes in the window and exit button as params
         functionality(win, e)
 
 
