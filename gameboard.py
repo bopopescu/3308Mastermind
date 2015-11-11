@@ -55,7 +55,7 @@ def functionality(win, e):
             break
 
 
-def board(win):
+def board(win, user, score):
     # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
@@ -122,15 +122,32 @@ def board(win):
     e.setFill('white')
     e2 = Text(Point(295, 60), "Exit")
     e2.draw(win)
+    userName = Text(Point(295, 80), "User:" + user)
+    userName.draw(win)
+    scoreBoard = Text(Point(295, 100), "High Score:" + str(score))
+    scoreBoard.draw(win)
+
     return e
 
+def loadHighScore(user):
+    scores = open("scores.csv", 'r')
+    highScore = 0
+    for line in scores:
+        userInfo = line.split(',')
+        if userInfo[0] == user:
+            for i in range(1,len(userInfo)):
+                currScore = int(userInfo[i])
+                if currScore > highScore:
+                    highScore = currScore
+    return highScore
 
 def main():
     gameParam = menufunctionality()
     if (gameParam.quitting != 1):
+        score = loadHighScore(gameParam.user)
         win = GraphWin("Mastermind", 400, 600)
-        e = board(win)
-        functionality(win, e)
+        e = board(win, gameParam.user, score)
+        functionality(win, e,)
 
 
 main()
