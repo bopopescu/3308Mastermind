@@ -95,19 +95,6 @@ def board(win):
                 guessboard[i][j].draw(win)
                 guessboard[i][j].setFill(color_rgb(102, 51, 0))
             j = j + 1
-        # smaller pegs to indicate correctness of the guess
-        #s1 = Circle(Point(225, 62 + 40 * i), 5)
-        #s1.draw(win)
-        #s1.setFill(color_rgb(102, 51, 0))
-        #s2 = Circle(Point(225, 48 + 40 * i), 5)
-        #s2.draw(win)
-        #s2.setFill(color_rgb(102, 51, 0))
-        #s3 = Circle(Point(239, 62 + 40 * i), 5)
-        #s3.draw(win)
-        #s3.setFill(color_rgb(102, 51, 0))
-        #s3 = Circle(Point(239, 48 + 40 * i), 5)
-        #s3.draw(win)
-        #s3.setFill(color_rgb(102, 51, 0))
         i = i + 1
     # peg options to the left of the holes
     redPeg = Circle(Point(280, 490), 10)
