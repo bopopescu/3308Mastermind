@@ -130,6 +130,7 @@ def board(win, user, score):
     userName = Text(Point(295, 80), "User:" + user)
     userName.draw(win)
     scoreBoard = Text(Point(295, 100), "High Score:" + str(score))
+    scoreBoard.setSize(9)
     scoreBoard.draw(win)
 
     return e
