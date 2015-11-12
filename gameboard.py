@@ -21,11 +21,14 @@ guesscolor = ["", "", "", ""]
 activeColor = color_rgb(102, 51, 0)
 redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
+# Window displayed to tell player they won
+# Also displays username, score for this game, and high score
 def winnerwindow(win):
     w = Rectangle(Point(100, 100), Point(200, 200))
     w.draw(win)
     w.setFill('white')
     
+# Convert guess list of strings to "Peg" format used in mastermind_alg code
 def numguess(guesscolor):
     newguess = []
     for j in range(len(guesscolor)):
@@ -43,6 +46,9 @@ def numguess(guesscolor):
             newguess.append(Peg.purple)
     return newguess
 
+# takes the score and sets the small pegs to indicate correctness
+# black peg: correct color and placement
+# white peg: correct color, wrong placement
 def setscore(score, checknum):
     black = 0
     for j in range(len(score)):
@@ -53,8 +59,11 @@ def setscore(score, checknum):
             guessboard[12 - checknum][j].setFill("white")
     return black
 
+
 def functionality(win, e, b, code):
-    # takes in win (graphic) and e (exit button)
+    # takes care of all the "button" functionality
+    # takes in win (graphic), e (exit button),
+    #    b (check button), code (code to be guessed)
     global activeColor
     checknum = 1
 
@@ -62,11 +71,16 @@ def functionality(win, e, b, code):
     while True:
         mouse = win.getMouse()  # pause for click in "Exit" button
         for j in range(4):
+            # one of the playable pegs is clicked
             if (playboard[12 - checknum][j].p1.x < mouse.x and playboard[12 - checknum][j].p1.y < mouse.y) and\
                     (playboard[12 - checknum][j].p2.x > mouse.x and playboard[12 - checknum][j].p2.y > mouse.y):
+                # changing color of peg on board
                 playboard[12 - checknum][j].setFill(activeColor)
+                # change color in guess list
                 guesscolor[j] = activeColor
-    #check to see if clicked in color selection 
+
+        #check to see if clicked in color selection
+        # if color selection is clicked, activeColor variable = color  
         if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
                         (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
                     activeColor = 'red'
@@ -85,6 +99,7 @@ def functionality(win, e, b, code):
         if (purplePeg.p1.x < mouse.x and purplePeg.p1.y < mouse.y) and\
                         (purplePeg.p2.x > mouse.x and purplePeg.p2.y > mouse.y):
                     activeColor = 'purple'
+
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
             print("guess at the time of clicking check button",  guesscolor )
@@ -95,6 +110,7 @@ def functionality(win, e, b, code):
             if(black == 4):
                 winnerwindow(win)
             checknum = checknum + 1
+
         #check to see if clicked on exit box
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
             win.close()
@@ -109,10 +125,12 @@ def board(win, user, score):
     r = Rectangle(Point(50, 25), Point(350, 550))
     r.draw(win)
     r.setFill(color_rgb(204, 102, 0))
+
     # "cover" of the solution at the bottom
     cover = Rectangle(Point(70, 525), Point(210, 550))
     cover.draw(win)
     cover.setFill(color_rgb(0, 153, 76))
+
     # loops to make all of the peg holes on the board
     i = 0
     while i < 12:
@@ -122,6 +140,7 @@ def board(win, user, score):
             playboard[i][j] = Circle(Point(80 + 40 * j, 55 + 40 * i), 10)
             playboard[i][j].draw(win)
             playboard[i][j].setFill(color_rgb(102, 51, 0))
+
             #smaller pegs to indicate correctness of the guess
             if(j == 0):
                 guessboard[i][j] = Circle(Point(225, 62 + 40 * i), 5)
@@ -141,6 +160,7 @@ def board(win, user, score):
                 guessboard[i][j].setFill(color_rgb(102, 51, 0))
             j = j + 1
         i = i + 1
+
     # peg options to the left of the holes
     redPeg = Circle(Point(280, 490), 10)
     redPeg.draw(win)
@@ -160,18 +180,22 @@ def board(win, user, score):
     purplePeg = Circle(Point(310, 430), 10)
     purplePeg.draw(win)
     purplePeg.setFill('purple')
+
     # button to check guess
     b = Rectangle(Point(270, 340), Point(320, 360))
     b.draw(win)
     b.setFill('white')
     b2 = Text(Point(295, 350), "Check")
     b2.draw(win)
+
     # button to exit the window
     e = Rectangle(Point(270, 50), Point(320, 70))
     e.draw(win)
     e.setFill('white')
     e2 = Text(Point(295, 60), "Exit")
     e2.draw(win)
+
+    # Box for displaying username on gameboard
     userName = Text(Point(295, 80), "User:" + user)
     userName.draw(win)
     scoreBoard = Text(Point(295, 100), "High Score:" + str(score))
@@ -196,6 +220,7 @@ def main():
     code = generateCode()
     # Initiates the menu
     gameParam = menufunctionality()
+
     # If the user did not click the quit button in the menu
     if (gameParam.quitting != 1):
         score = loadHighScore(gameParam.user)
