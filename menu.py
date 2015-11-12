@@ -86,11 +86,8 @@ def menufunctionality():
             # if settings menu is chosen, will display difficulty options
             play2.setText('Easy')
             settings2.setText('Medium')
-            quit2.setText('Hard')
-            back = Rectangle(Point(100, 150), Point(140, 175))
-            back.draw(menu)
-            back2 = Text(Point(120, 162), 'Back')
-            back2.draw(menu)
+            how2play2.setText('Hard')
+            quit2.setText('Back')
             while True:
                 # Highlights one of three choices based on selection
                 if param.difficulty == 0:
