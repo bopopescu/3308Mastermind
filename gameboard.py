@@ -41,11 +41,15 @@ def numguess(guesscolor):
     return newguess
 
 def setscore(score, checknum):
+    black = 0
     for j in range(len(score)):
         if score[j] == Pin.black:
             guessboard[12 - checknum][j].setFill("black")
+            black = black + 1
         else:
             guessboard[12 - checknum][j].setFill("white")
+    if(black == 4):
+        print("Winner Winner Chicken Dinner")
 
 def findguess(checknum):
     guess = []
