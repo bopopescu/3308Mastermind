@@ -23,7 +23,7 @@ class Pin(Enum):
 def generateCode():
     code = []
     for i in range(4) :
-        code.append(Peg(random.randrange(7)))
+        code.append(Peg(random.randrange(1, 7)))
     return code
 
 # Scores guess by comparing guess to code using loops
