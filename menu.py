@@ -93,15 +93,15 @@ def menufunctionality():
                 if param.difficulty == 0:
                     play.setOutline('green')
                     settings.setOutline('black')
-                    quit.setOutline('black')
+                    how2play.setOutline('black')
                 elif param.difficulty == 1:
                     play.setOutline('black')
                     settings.setOutline('green')
-                    quit.setOutline('black')
+                    how2play.setOutline('black')
                 else:
                     play.setOutline('black')
                     settings.setOutline('black')
-                    quit.setOutline('green')
+                    how2play.setOutline('green')
                 mouse = menu.getMouse()
                 # Checking which difficulty is clicked or back to main menu
                 if (play.p1.x < mouse.x and play.p2.x > mouse.x)\
@@ -110,19 +110,18 @@ def menufunctionality():
                 if (settings.p1.x < mouse.x and settings.p2.x > mouse.x)\
                         and (settings.p1.y < mouse.y and settings.p2.y > mouse.y):
                     param.setDifficulty(1)
+                if (how2play.p1.x < mouse.x and how2play.p2.x > mouse.x)\
+                        and (how2play.p1.y < mouse.y and how2play.p2.y > mouse.y):
+                    param.setDifficulty(2)
                 if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
                         and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
-                    param.setDifficulty(2)
-                if (back.p1.x < mouse.x and back.p2.x > mouse.x)\
-                        and (back.p1.y < mouse.y and back.p2.y > mouse.y):
                     # Reset to main menu
-                    back.undraw()
-                    back2.undraw()
                     play.setOutline('black')
                     settings.setOutline('black')
                     quit.setOutline('black')
                     play2.setText('Play')
                     settings2.setText('Settings')
+                    how2play2.setText('How to Play')
                     quit2.setText('Quit Game')
                     break
             continue
