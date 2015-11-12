@@ -1,7 +1,6 @@
 from graphics import *
 from menu import *
 from mastermind_alg import *
-from enum import Enum
 
 #class for each playable slot
 class Pegslot(Circle):
@@ -22,6 +21,11 @@ guesscolor = ["", "", "", ""]
 #after the user clicks a color, it will set this variable
 activeColor = color_rgb(102, 51, 0)
 redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
+
+def winnerwindow(win):
+    w = Rectangle(Point(100, 100), Point(200, 200))
+    w.draw(win)
+    w.setFill('white')
 
 def numguess(guesscolor):
     newguess = []
@@ -48,8 +52,7 @@ def setscore(score, checknum):
             black = black + 1
         else:
             guessboard[12 - checknum][j].setFill("white")
-    if(black == 4):
-        print("Winner Winner Chicken Dinner")
+    return black
 
 def findguess(checknum):
     guess = []
@@ -75,10 +78,9 @@ def functionality(win, e, b, code):
     while True:
         mouse = win.getMouse()  # pause for click in "Exit" button
         #check to see if clicked inside of a playable peg slot
-        #for i in range(12):
         for j in range(4):
             if (playboard[12 - checknum][j].p1.x < mouse.x and playboard[12 - checknum][j].p1.y < mouse.y) and\
-                        (playboard[12 - checknum][j].p2.x > mouse.x and playboard[12 - checknum][j].p2.y > mouse.y):
+                            (playboard[12 - checknum][j].p2.x > mouse.x and playboard[12 - checknum][j].p2.y > mouse.y):
                 playboard[12 - checknum][j].setFill(activeColor)
                 print("active color at time of setting", activeColor)
                 guesscolor[j] = activeColor
@@ -86,29 +88,31 @@ def functionality(win, e, b, code):
         #check to see if clicked in color selection
         if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
                         (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
-                    activeColor = 'red'
+                activeColor = 'red'
         if (orangePeg.p1.x < mouse.x and orangePeg.p1.y < mouse.y) and\
                         (orangePeg.p2.x > mouse.x and orangePeg.p2.y > mouse.y):
-                    activeColor = 'orange'
+                activeColor = 'orange'
         if (yellowPeg.p1.x < mouse.x and yellowPeg.p1.y < mouse.y) and\
                         (yellowPeg.p2.x > mouse.x and yellowPeg.p2.y > mouse.y):
-                    activeColor = 'yellow'
+                activeColor = 'yellow'
         if (greenPeg.p1.x < mouse.x and greenPeg.p1.y < mouse.y) and\
                         (greenPeg.p2.x > mouse.x and greenPeg.p2.y > mouse.y):
-                    activeColor = 'green'
+                activeColor = 'green'
         if (bluePeg.p1.x < mouse.x and bluePeg.p1.y < mouse.y) and\
-                        (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
-                    activeColor = 'blue'
+                            (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
+                activeColor = 'blue'
         if (purplePeg.p1.x < mouse.x and purplePeg.p1.y < mouse.y) and\
                         (purplePeg.p2.x > mouse.x and purplePeg.p2.y > mouse.y):
-                    activeColor = 'purple'
+                activeColor = 'purple'
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
             print("guess at the time of clicking check button",  guesscolor )
             newguess = numguess(guesscolor)
             print("newguess w/ num: ", newguess)
             score = scoreGuess(newguess, code)
-            setscore(score, checknum)
+            black = setscore(score, checknum)
+            if(black == 4):
+                winnerwindow(win)
             checknum = checknum + 1
      
         #check to see if clicked on exit box
