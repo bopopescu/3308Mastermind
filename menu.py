@@ -52,8 +52,10 @@ def menufunctionality():
             # Changes and adds objects to reflect username selection menu
             play2.undraw()
             settings2.setText('Start')
-            quit2.setText('Cancel')
-            name = Entry(Point(200, 225), 20)
+            how2play2.setText('Cancel')
+            quit.undraw()
+            quit2.undraw()
+            name = Entry(Point(200, 175), 20)
             name.setText('Enter username here')
             name.draw(menu)
             while True:
@@ -71,8 +73,8 @@ def menufunctionality():
                         param.setUser(name.getText())
                         menu.close()
                         return param
-                if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
-                        and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
+                if (how2play.p1.x < mouse.x and how2play.p2.x > mouse.x)\
+                        and (how2play.p1.y < mouse.y and how2play.p2.y > mouse.y):
                     name.undraw()
                     play2.draw(menu)
                     if (warned):
@@ -118,6 +120,7 @@ def menufunctionality():
                     # Reset to main menu
                     play.setOutline('black')
                     settings.setOutline('black')
+                    how2play.setOutline('black')
                     quit.setOutline('black')
                     play2.setText('Play')
                     settings2.setText('Settings')
