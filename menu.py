@@ -15,27 +15,35 @@ class GameParam():
 def menufunctionality():
     # Creates separate GraphWin object for menu
     menu = GraphWin("Main Menu", 400, 600)
+    
     # Sets up title
-    title = Text(Point(200, 100), 'Mastermind')
+    title = Text(Point(200, 75), 'Mastermind')
     title.setSize(36)
     title.setStyle('bold')
     title.draw(menu)
+
     # Sets up buttons
-    play = Rectangle(Point(100, 190), Point(300, 260))
+    play = Rectangle(Point(100, 140), Point(300, 210))
     play.draw(menu)
-    play2 = Text(Point(200, 225), 'Play')
+    play2 = Text(Point(200, 175), 'Play')
     play2.draw(menu)
-    settings = Rectangle(Point(100, 320), Point(300, 390))
+    settings = Rectangle(Point(100, 250), Point(300, 320))
     settings.draw(menu)
-    settings2 = Text(Point(200, 355), 'Settings')
+    settings2 = Text(Point(200, 285), 'Settings')
     settings2.draw(menu)
-    quit = Rectangle(Point(100, 450), Point(300, 520))
+    how2play = Rectangle(Point(100, 360), Point(300, 430))
+    how2play.draw(menu)
+    how2play2 = Text(Point(200, 395), 'How to Play')
+    how2play2.draw(menu)
+    quit = Rectangle(Point(100, 470), Point(300, 540))
     quit.draw(menu)
-    quit2 = Text(Point(200, 485), 'Quit Game')
+    quit2 = Text(Point(200, 505), 'Quit Game')
     quit2.draw(menu)
+
     # Initiate GameParam object
     # To be returned to gameboard.py, detailing user settings
     param = GameParam()
+
     # Gets mouse input 
     while True:
         mouse = menu.getMouse()
