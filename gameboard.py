@@ -42,7 +42,7 @@ def numguess(guesscolor):
 
 def setscore(score, checknum):
     for j in range(len(score)):
-        if score[j] == 1:
+        if score[j] == Pin.black:
             guessboard[12 - checknum][j].setFill("black")
         else:
             guessboard[12 - checknum][j].setFill("white")
