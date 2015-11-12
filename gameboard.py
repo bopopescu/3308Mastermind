@@ -23,12 +23,29 @@ guesscolor = ["", "", "", ""]
 activeColor = color_rgb(102, 51, 0)
 redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
+def numguess(guesscolor):
+    newguess = []
+    for j in range(len(guesscolor)):
+        if guesscolor[j] == 'red':
+            newguess.append(Peg.red)
+        elif guesscolor[j] == 'orange':
+            newguess.append(Peg.orange)
+        elif guesscolor[j] == 'yellow':
+            newguess.append(Peg.yellow)
+        elif guesscolor[j] == 'green':
+            newguess.append(Peg.green)
+        elif guesscolor[j] == 'blue':
+            newguess.append(Peg.blue)
+        elif guesscolor[j] == 'purple':
+            newguess.append(Peg.purple)
+    return newguess
+
 def setscore(score, checknum):
     for j in range(len(score)):
         if score[j] == 1:
-            guessboard[12 - checknum][j].setFill(black)
+            guessboard[12 - checknum][j].setFill("black")
         else:
-            guessboard[12 - checknum][j].setFill(white)
+            guessboard[12 - checknum][j].setFill("white")
 
 def findguess(checknum):
     guess = []
@@ -84,7 +101,9 @@ def functionality(win, e, b, code):
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
             print("guess at the time of clicking check button",  guesscolor )
-            score = scoreGuess(guesscolor, code)
+            newguess = numguess(guesscolor)
+            print("newguess w/ num: ", newguess)
+            score = scoreGuess(newguess, code)
             setscore(score, checknum)
             checknum = checknum + 1
      
@@ -175,6 +194,7 @@ def play():
 def main():
     # generates code for game from mastermind_alg.py
     code = generateCode()
+    print(code)
     # Initiates the menu from menu.py
     #gameParam = menufunctionality()
     # If the user did not click the quit button in the menu
