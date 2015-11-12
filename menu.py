@@ -53,11 +53,8 @@ def menufunctionality():
                 if (settings.p1.x < mouse.x and settings.p2.x > mouse.x)\
                         and (settings.p1.y < mouse.y and settings.p2.y > mouse.y):
                     if name.getText() == 'Enter username here' or name.getText() == '':
-<<<<<<< HEAD
+
                         # Displays reminder for user to enter username
-=======
-                	# Displays reminder for user to enter username
->>>>>>> rachel
                         warn = Text(Point(200, 200), 'Enter a username')
                         warn.setTextColor('red')
                         warn.draw(menu)
