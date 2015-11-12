@@ -10,7 +10,6 @@ class Pegslot(Circle):
     def setColor(self, color):
         self.setFill(color)
 
-
 #create global playboard which is an 2d list of all playable slots
 playboard = [[Pegslot() for i in range(4)] for j in range(12)]
 # create global guessboard which is a 2d list of all slots to show correctness
@@ -26,7 +25,7 @@ def winnerwindow(win):
     w = Rectangle(Point(100, 100), Point(200, 200))
     w.draw(win)
     w.setFill('white')
-
+    
 def numguess(guesscolor):
     newguess = []
     for j in range(len(guesscolor)):
@@ -54,56 +53,38 @@ def setscore(score, checknum):
             guessboard[12 - checknum][j].setFill("white")
     return black
 
-def findguess(checknum):
-    guess = []
-    for j in range(4):
-        i = guesscolor(j)
-        print("guess color in findguess: ", i)
-        if i == 'red':
-            guess.append(1)
-        print("guess array in findguess: ", guess)
-        #i = playboard[12 - checknum][j]
-        #k = (i == "red")
-        #print(k)
-        #color = playboard[12 - checknum][j]
-        #guess.append(Peg.color)
-    #return guess
-
 def functionality(win, e, b, code):
-    # takes in win (graphic)
+    # takes in win (graphic) and e (exit button)
     global activeColor
     checknum = 1
 
     # functionality to close window when a button is clicked
     while True:
         mouse = win.getMouse()  # pause for click in "Exit" button
-        #check to see if clicked inside of a playable peg slot
         for j in range(4):
             if (playboard[12 - checknum][j].p1.x < mouse.x and playboard[12 - checknum][j].p1.y < mouse.y) and\
-                            (playboard[12 - checknum][j].p2.x > mouse.x and playboard[12 - checknum][j].p2.y > mouse.y):
+                    (playboard[12 - checknum][j].p2.x > mouse.x and playboard[12 - checknum][j].p2.y > mouse.y):
                 playboard[12 - checknum][j].setFill(activeColor)
-                print("active color at time of setting", activeColor)
                 guesscolor[j] = activeColor
-                #playboard[12 - checknum][j] = activeColor
-        #check to see if clicked in color selection
+    #check to see if clicked in color selection 
         if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
                         (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
-                activeColor = 'red'
+                    activeColor = 'red'
         if (orangePeg.p1.x < mouse.x and orangePeg.p1.y < mouse.y) and\
                         (orangePeg.p2.x > mouse.x and orangePeg.p2.y > mouse.y):
-                activeColor = 'orange'
+                    activeColor = 'orange'
         if (yellowPeg.p1.x < mouse.x and yellowPeg.p1.y < mouse.y) and\
                         (yellowPeg.p2.x > mouse.x and yellowPeg.p2.y > mouse.y):
-                activeColor = 'yellow'
+                    activeColor = 'yellow'
         if (greenPeg.p1.x < mouse.x and greenPeg.p1.y < mouse.y) and\
                         (greenPeg.p2.x > mouse.x and greenPeg.p2.y > mouse.y):
-                activeColor = 'green'
+                    activeColor = 'green'
         if (bluePeg.p1.x < mouse.x and bluePeg.p1.y < mouse.y) and\
-                            (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
-                activeColor = 'blue'
+                        (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
+                    activeColor = 'blue'
         if (purplePeg.p1.x < mouse.x and purplePeg.p1.y < mouse.y) and\
                         (purplePeg.p2.x > mouse.x and purplePeg.p2.y > mouse.y):
-                activeColor = 'purple'
+                    activeColor = 'purple'
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
             print("guess at the time of clicking check button",  guesscolor )
@@ -114,17 +95,16 @@ def functionality(win, e, b, code):
             if(black == 4):
                 winnerwindow(win)
             checknum = checknum + 1
-     
         #check to see if clicked on exit box
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
             win.close()
             break
 
 # sets up board graphics
-def board(win):
-    # takes in win (graphic) and returns e (exit button) and b (check button)
+def board(win, user, score):
+    # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
-    
+
     # actual game board
     r = Rectangle(Point(50, 25), Point(350, 550))
     r.draw(win)
@@ -192,28 +172,38 @@ def board(win):
     e.setFill('white')
     e2 = Text(Point(295, 60), "Exit")
     e2.draw(win)
+    userName = Text(Point(295, 80), "User:" + user)
+    userName.draw(win)
+    scoreBoard = Text(Point(295, 100), "High Score:" + str(score))
+    scoreBoard.setSize(9)
+    scoreBoard.draw(win)
+
     return (e, b)
 
-def play():
-    checknum = 0
-    
-    
+def loadHighScore(user):
+    scores = open("scores.csv", 'r')
+    highScore = 0
+    for line in scores:
+        userInfo = line.split(',')
+        if userInfo[0] == user:
+            for i in range(1,len(userInfo)):
+                currScore = int(userInfo[i])
+                if currScore > highScore:
+                    highScore = currScore
+    return highScore
 
 def main():
-    # generates code for game from mastermind_alg.py
     code = generateCode()
-    print(code)
-    # Initiates the menu from menu.py
-    #gameParam = menufunctionality()
+    # Initiates the menu
+    gameParam = menufunctionality()
     # If the user did not click the quit button in the menu
-    #if (gameParam.quitting != 1):
+    if (gameParam.quitting != 1):
+        score = loadHighScore(gameParam.user)
         # setting up window for the game
-    win = GraphWin("Mastermind", 400, 600)
+        win = GraphWin("Mastermind", 400, 600)
         # takes the window and creates the board
-        # returns the exit button
-    (e, b) = board(win)
-        # the functionality takes in the window and exit button as params
-    functionality(win, e, b, code)
-
+        # returns the exit an check buttons
+        (e, b) = board(win, gameParam.user, score)
+        functionality(win, e, b, code)
 
 main()
