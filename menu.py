@@ -15,27 +15,35 @@ class GameParam():
 def menufunctionality():
     # Creates separate GraphWin object for menu
     menu = GraphWin("Main Menu", 400, 600)
+    
     # Sets up title
-    title = Text(Point(200, 100), 'Mastermind')
+    title = Text(Point(200, 75), 'Mastermind')
     title.setSize(36)
     title.setStyle('bold')
     title.draw(menu)
+
     # Sets up buttons
-    play = Rectangle(Point(100, 190), Point(300, 260))
+    play = Rectangle(Point(100, 140), Point(300, 210))
     play.draw(menu)
-    play2 = Text(Point(200, 225), 'Play')
+    play2 = Text(Point(200, 175), 'Play')
     play2.draw(menu)
-    settings = Rectangle(Point(100, 320), Point(300, 390))
+    settings = Rectangle(Point(100, 250), Point(300, 320))
     settings.draw(menu)
-    settings2 = Text(Point(200, 355), 'Settings')
+    settings2 = Text(Point(200, 285), 'Settings')
     settings2.draw(menu)
-    quit = Rectangle(Point(100, 450), Point(300, 520))
+    how2play = Rectangle(Point(100, 360), Point(300, 430))
+    how2play.draw(menu)
+    how2play2 = Text(Point(200, 395), 'How to Play')
+    how2play2.draw(menu)
+    quit = Rectangle(Point(100, 470), Point(300, 540))
     quit.draw(menu)
-    quit2 = Text(Point(200, 485), 'Quit Game')
+    quit2 = Text(Point(200, 505), 'Quit Game')
     quit2.draw(menu)
+
     # Initiate GameParam object
     # To be returned to gameboard.py, detailing user settings
     param = GameParam()
+
     # Gets mouse input 
     while True:
         mouse = menu.getMouse()
@@ -44,8 +52,10 @@ def menufunctionality():
             # Changes and adds objects to reflect username selection menu
             play2.undraw()
             settings2.setText('Start')
-            quit2.setText('Cancel')
-            name = Entry(Point(200, 225), 20)
+            how2play2.setText('Cancel')
+            quit.undraw()
+            quit2.undraw()
+            name = Entry(Point(200, 175), 20)
             name.setText('Enter username here')
             name.draw(menu)
             while True:
@@ -63,8 +73,8 @@ def menufunctionality():
                         param.setUser(name.getText())
                         menu.close()
                         return param
-                if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
-                        and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
+                if (how2play.p1.x < mouse.x and how2play.p2.x > mouse.x)\
+                        and (how2play.p1.y < mouse.y and how2play.p2.y > mouse.y):
                     name.undraw()
                     play2.draw(menu)
                     if (warned):
@@ -78,25 +88,22 @@ def menufunctionality():
             # if settings menu is chosen, will display difficulty options
             play2.setText('Easy')
             settings2.setText('Medium')
-            quit2.setText('Hard')
-            back = Rectangle(Point(100, 150), Point(140, 175))
-            back.draw(menu)
-            back2 = Text(Point(120, 162), 'Back')
-            back2.draw(menu)
+            how2play2.setText('Hard')
+            quit2.setText('Back')
             while True:
                 # Highlights one of three choices based on selection
                 if param.difficulty == 0:
                     play.setOutline('green')
                     settings.setOutline('black')
-                    quit.setOutline('black')
+                    how2play.setOutline('black')
                 elif param.difficulty == 1:
                     play.setOutline('black')
                     settings.setOutline('green')
-                    quit.setOutline('black')
+                    how2play.setOutline('black')
                 else:
                     play.setOutline('black')
                     settings.setOutline('black')
-                    quit.setOutline('green')
+                    how2play.setOutline('green')
                 mouse = menu.getMouse()
                 # Checking which difficulty is clicked or back to main menu
                 if (play.p1.x < mouse.x and play.p2.x > mouse.x)\
@@ -105,19 +112,19 @@ def menufunctionality():
                 if (settings.p1.x < mouse.x and settings.p2.x > mouse.x)\
                         and (settings.p1.y < mouse.y and settings.p2.y > mouse.y):
                     param.setDifficulty(1)
+                if (how2play.p1.x < mouse.x and how2play.p2.x > mouse.x)\
+                        and (how2play.p1.y < mouse.y and how2play.p2.y > mouse.y):
+                    param.setDifficulty(2)
                 if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
                         and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
-                    param.setDifficulty(2)
-                if (back.p1.x < mouse.x and back.p2.x > mouse.x)\
-                        and (back.p1.y < mouse.y and back.p2.y > mouse.y):
                     # Reset to main menu
-                    back.undraw()
-                    back2.undraw()
                     play.setOutline('black')
                     settings.setOutline('black')
+                    how2play.setOutline('black')
                     quit.setOutline('black')
                     play2.setText('Play')
                     settings2.setText('Settings')
+                    how2play2.setText('How to Play')
                     quit2.setText('Quit Game')
                     break
             continue
