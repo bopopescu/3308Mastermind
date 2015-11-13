@@ -1,5 +1,7 @@
 from graphics import *
 
+warned = 0
+
 class GameParam():
     def __init__(self):
         self.user = 'default'
@@ -47,6 +49,7 @@ def menufunctionality():
     # Gets mouse input 
     while True:
         mouse = menu.getMouse()
+        # one at this point is "Play"
         if (one.p1.x < mouse.x and one.p2.x > mouse.x)\
                 and (one.p1.y < mouse.y and one.p2.y > mouse.y):
             # Changes and adds objects to reflect username selection menu
@@ -58,8 +61,10 @@ def menufunctionality():
             name = Entry(Point(200, 175), 20)
             name.setText('Enter username here')
             name.draw(menu)
+            warn2 = False
             while True:
                 mouse = menu.getMouse()
+                # two at this point is "Start"
                 if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
                         and (two.p1.y < mouse.y and two.p2.y > mouse.y):
                     if name.getText() == 'Enter username here' or name.getText() == '':
@@ -68,22 +73,28 @@ def menufunctionality():
                         warn = Text(Point(200, 200), 'Enter a username')
                         warn.setTextColor('red')
                         warn.draw(menu)
-                        warned = 1
+                        warn2 = True
                     else:
                         param.setUser(name.getText())
                         menu.close()
                         return param
+                # three at this point is "Cancel"
                 if (three.p1.x < mouse.x and three.p2.x > mouse.x)\
                         and (three.p1.y < mouse.y and three.p2.y > mouse.y):
                     name.undraw()
                     one2.draw(menu)
-                    if (warned):
+                    if (warn2):
                         warn.undraw()
                     two2.setText('Settings')
-                    four2.setText('Quit Game')
+                    three2.setText('Instructions')
+                    four = Rectangle(Point(100, 470), Point(300, 540))
+                    four.draw(menu)
+                    four2 = Text(Point(200, 505), 'Quit Game')
+                    four2.draw(menu)
                     break
             continue
-        if (two.p1.x < two.x and two.p2.x > mouse.x)\
+        # two at this point is "Menu"
+        if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
                  and (two.p1.y < mouse.y and two.p2.y > mouse.y):
             # if settings menu is chosen, will display difficulty options
             one2.setText('Easy')
@@ -106,15 +117,19 @@ def menufunctionality():
                     three.setOutline('green')
                 mouse = menu.getMouse()
                 # Checking which difficulty is clicked or back to main menu
+                # one at this point is "Easy"
                 if (one.p1.x < mouse.x and one.p2.x > mouse.x)\
                         and (one.p1.y < mouse.y and one.p2.y > mouse.y):
                     param.setDifficulty(0)
+                # two at this point is "Medium"
                 if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
                         and (two.p1.y < mouse.y and two.p2.y > mouse.y):
                     param.setDifficulty(1)
+                # three at this point is "Hard"
                 if (three.p1.x < mouse.x and three.p2.x > mouse.x)\
                         and (three.p1.y < mouse.y and three.p2.y > mouse.y):
                     param.setDifficulty(2)
+                # four at this point is "Back"
                 if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
                         and (four.p1.y < mouse.y and four.p2.y > mouse.y):
                     # Reset to main menu
@@ -128,6 +143,7 @@ def menufunctionality():
                     four2.setText('Quit Game')
                     break
             continue
+        # four at this point is "Quit"
         if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
                 and (four.p1.y < mouse.y and four.p2.y > mouse.y):
             param.setQuitting()
