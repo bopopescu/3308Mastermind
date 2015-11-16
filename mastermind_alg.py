@@ -20,10 +20,15 @@ class Pin(Enum):
     white = 2
 
 # Generates random code for user to guess
-def generateCode():
+def generateCode(difficulty):
     code = []
     for i in range(4) :
-        code.append(Peg(random.randrange(1, 7)))
+        validval = 0
+        while not validval :
+            colour = Peg(random.randrange(1,7))
+            if code.count(colour) < (difficulty + 1) :
+                validval = 1
+                code.append(colour)
     return code
 
 # Scores guess by comparing guess to code using loops

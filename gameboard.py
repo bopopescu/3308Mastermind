@@ -217,10 +217,12 @@ def loadHighScore(user):
     return highScore
 
 def main():
-    code = generateCode()
     # Initiates the menu
     gameParam = menufunctionality()
-
+    # Generates code based on chose difficulty
+    for i in range(8) :
+        code = generateCode(gameParam.difficulty)
+        print code
     # If the user did not click the quit button in the menu
     if (gameParam.quitting != 1):
         score = loadHighScore(gameParam.user)
