@@ -1,7 +1,5 @@
 from graphics import *
 
-warned = 0
-
 class GameParam():
     def __init__(self):
         self.user = 'default'
@@ -23,6 +21,9 @@ def menufunctionality():
     title.setSize(36)
     title.setStyle('bold')
     title.draw(menu)
+
+    # Sets 'warned' as a local variable of menufunctionality()
+    warned = 0
 
     # Sets up buttons
     one = Rectangle(Point(100, 140), Point(300, 210))
@@ -61,19 +62,19 @@ def menufunctionality():
             name = Entry(Point(200, 175), 20)
             name.setText('Enter username here')
             name.draw(menu)
-            warn2 = False
+            warned = False
             while True:
                 mouse = menu.getMouse()
                 # two at this point is "Start"
                 if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
                         and (two.p1.y < mouse.y and two.p2.y > mouse.y):
-                    if name.getText() == 'Enter username here' or name.getText() == '':
+                    if name.getText() == 'Enter username here' or name.getText() == '))':
 
                         # Displays reminder for user to enter username
                         warn = Text(Point(200, 200), 'Enter a username')
                         warn.setTextColor('red')
                         warn.draw(menu)
-                        warn2 = True
+                        warned = True
                     else:
                         param.setUser(name.getText())
                         menu.close()
@@ -83,17 +84,16 @@ def menufunctionality():
                         and (three.p1.y < mouse.y and three.p2.y > mouse.y):
                     name.undraw()
                     one2.draw(menu)
-                    if (warn2):
+                    if (warned):
                         warn.undraw()
                     two2.setText('Settings')
-                    three2.setText('Instructions')
-                    four = Rectangle(Point(100, 470), Point(300, 540))
+                    three2.setText('How to Play')
                     four.draw(menu)
-                    four2 = Text(Point(200, 505), 'Quit Game')
                     four2.draw(menu)
                     break
             continue
-        # two at this point is "Menu"
+
+        # two at this point is "Settings"
         if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
                  and (two.p1.y < mouse.y and two.p2.y > mouse.y):
             # if settings menu is chosen, will display difficulty options
@@ -143,6 +143,49 @@ def menufunctionality():
                     four2.setText('Quit Game')
                     break
             continue
+
+        # three at this point is "How to Play"
+        if (three.p1.x < mouse.x and three.p2.x > mouse.x)\
+                and (three.p1.y < mouse.y and three.p2.y > mouse.y):
+            one.undraw()
+            one2.undraw()
+            two.undraw()
+            two2.undraw()
+            three.undraw()
+            three2.undraw()
+            four2.setText('Back')
+            howto = Text(Point(200, 285), """
+How to Play: Mastermind
+
+There is a code of four colored pegs hidden beneath the green on the board.
+Guess the colors of a code of four pegs.
+Click the check button to score your guess.
+
+The small pegs on the right indicate the correctness of your guess.
+White pegs represent a correct color, but in the wrong place.
+Black pegs represent a correct color and correct placement.
+The pegs show up in no particular order.
+
+You have 12 tries.
+Good Luck!
+""")
+            howto.draw(menu)
+            while True:
+                # four at this point is "Back"
+                mouse = menu.getMouse()
+                if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
+                        and (four.p1.y < mouse.y and four.p2.y > mouse.y):
+                    one.draw(menu)
+                    one2.draw(menu)
+                    two.draw(menu)
+                    two2.draw(menu)
+                    three.draw(menu)
+                    three2.draw(menu)
+                    four2.setText('Quit Game')
+                    howto.undraw()
+                    break
+            continue
+
         # four at this point is "Quit"
         if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
                 and (four.p1.y < mouse.y and four.p2.y > mouse.y):
