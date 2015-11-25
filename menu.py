@@ -71,10 +71,11 @@ def menufunctionality():
                     if name.getText() == 'Enter username here' or name.getText() == '))':
 
                         # Displays reminder for user to enter username
-                        warn = Text(Point(200, 200), 'Enter a username')
-                        warn.setTextColor('red')
-                        warn.draw(menu)
-                        warned = True
+                        if warned == False:
+                            warn = Text(Point(200, 200), 'Enter a username')
+                            warn.setTextColor('red')
+                            warn.draw(menu)
+                            warned = True
                     else:
                         param.setUser(name.getText())
                         menu.close()
