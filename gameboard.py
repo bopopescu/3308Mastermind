@@ -21,14 +21,51 @@ guesscolor = ["", "", "", ""]
 activeColor = color_rgb(102, 51, 0)
 redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
+
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
-def winnerwindow(win):
-    w = Rectangle(Point(100, 100), Point(200, 200))
+def winnerwindow(win, code, cover, winorlose, user):
+    w = Rectangle(Point(100, 125), Point(300, 325))
     w.draw(win)
     w.setFill('white')
-    
+    if winorlose == 'win':
+        winner = Text(Point(200, 225), """
+Winner Winner Chicken Dinner
+Username: """ + user + """
+Score:
+High Score:
+""")
+    elif winorlose == 'lose':
+        winner = Text(Point(200, 225), """
+Better Luck Next Time
+Username
+Score: 0
+High Score:
+""")
+    winner.setStyle('bold')
+    winner.draw(win)
+    # Make the "cover" covering the code come back
+    cover.undraw()
+    coversliv = Rectangle(Point(70, 515), Point(210, 520))
+    coversliv.draw(win)
+    coversliv.setFill(color_rgb(0, 153, 76))
+    # Display target code where cover was
+    answer = revnumguess(code)
+    w1 = Circle(Point(80, 537), 10)
+    w1.draw(win)
+    w1.setFill(answer[0])
+    w2 = Circle(Point(120, 537), 10)
+    w2.draw(win)
+    w2.setFill(answer[1])
+    w3 = Circle(Point(160, 537), 10)
+    w3.draw(win)
+    w3.setFill(answer[2])
+    w4 = Circle(Point(200, 537), 10)
+    w4.draw(win)
+    w4.setFill(answer[3])
+
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
+
 def numguess(guesscolor):
     newguess = []
     for j in range(len(guesscolor)):
@@ -44,7 +81,31 @@ def numguess(guesscolor):
             newguess.append(Peg.blue)
         elif guesscolor[j] == 'purple':
             newguess.append(Peg.purple)
+        else:
+            newguess.append(Peg.empty)
     return newguess
+
+def revnumguess(code):
+    newcode = []
+    for j in range(len(code)):
+        if code[j] == Peg.red:
+            newcode.append('red')
+        elif code[j] == Peg.orange:
+            newcode.append('orange')
+        elif code[j] == Peg.yellow:
+            newcode.append('yellow')
+        elif code[j] == Peg.green:
+            newcode.append('green')
+        elif code[j] == Peg.blue:
+            newcode.append('blue')
+        elif code[j] == Peg.green:
+            newcode.append('green')
+        elif code[j] == Peg.purple:
+            newcode.append('purple')
+        else:
+            newcode.append('')
+    return newcode
+
 
 # takes the score and sets the small pegs to indicate correctness
 # black peg: correct color and placement
@@ -59,13 +120,18 @@ def setscore(score, checknum):
             guessboard[12 - checknum][j].setFill("white")
     return black
 
+#def pointUpdate(win, checknum):
+ #   pointer = Circle(Point(50, 25 + 25 * checknum), 5)
+  #  pointer.draw(win)
+   # pointer.setFill('white')
 
-def functionality(win, e, b, code):
+def functionality(win, e, b, code, cover, user):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
     global activeColor
     checknum = 1
+#    pointUpdate(win, checknum)
 
     # functionality to close window when a button is clicked
     while True:
@@ -102,14 +168,15 @@ def functionality(win, e, b, code):
 
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
-            print("guess at the time of clicking check button",  guesscolor )
             newguess = numguess(guesscolor)
-            print("newguess w/ num: ", newguess)
             score = scoreGuess(newguess, code)
             black = setscore(score, checknum)
             if(black == 4):
-                winnerwindow(win)
+                winnerwindow(win, code, cover, 'win', user)
+            if(checknum == 12):
+                winnerwindow(win, code, cover, 'lose', user)
             checknum = checknum + 1
+ #           pointUpdate(win, checknum)
 
         #check to see if clicked on exit box
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
@@ -127,7 +194,7 @@ def board(win, user, score):
     r.setFill(color_rgb(204, 102, 0))
 
     # "cover" of the solution at the bottom
-    cover = Rectangle(Point(70, 525), Point(210, 550))
+    cover = Rectangle(Point(70, 515), Point(210, 550))
     cover.draw(win)
     cover.setFill(color_rgb(0, 153, 76))
 
@@ -139,25 +206,25 @@ def board(win, user, score):
             # bigger pegs to put guesses in
             playboard[i][j] = Circle(Point(80 + 40 * j, 55 + 40 * i), 10)
             playboard[i][j].draw(win)
-            playboard[i][j].setFill(color_rgb(102, 51, 0))
+            playboard[i][j].setFill(color_rgb(145, 93, 0))
 
             #smaller pegs to indicate correctness of the guess
             if(j == 0):
                 guessboard[i][j] = Circle(Point(225, 62 + 40 * i), 5)
                 guessboard[i][j].draw(win)
-                guessboard[i][j].setFill(color_rgb(102, 51, 0))
+                guessboard[i][j].setFill(color_rgb(145, 93, 0))
             if(j == 1):
                 guessboard[i][j] = Circle(Point(225, 48 + 40 * i), 5)
                 guessboard[i][j].draw(win)
-                guessboard[i][j].setFill(color_rgb(102, 51, 0))
+                guessboard[i][j].setFill(color_rgb(145, 93, 0))
             if(j == 2):
                 guessboard[i][j] = Circle(Point(239, 62 + 40 * i), 5)
                 guessboard[i][j].draw(win)
-                guessboard[i][j].setFill(color_rgb(102, 51, 0))
+                guessboard[i][j].setFill(color_rgb(145, 93, 0))
             if(j == 3):
                 guessboard[i][j] = Circle(Point(239, 48 + 40 * i), 5)
                 guessboard[i][j].draw(win)
-                guessboard[i][j].setFill(color_rgb(102, 51, 0))
+                guessboard[i][j].setFill(color_rgb(145, 93, 0))
             j = j + 1
         i = i + 1
 
@@ -196,13 +263,13 @@ def board(win, user, score):
     e2.draw(win)
 
     # Box for displaying username on gameboard
-    userName = Text(Point(295, 80), "User:" + user)
+    userName = Text(Point(295, 80), "User: " + user)
     userName.draw(win)
-    scoreBoard = Text(Point(295, 100), "High Score:" + str(score))
+    scoreBoard = Text(Point(295, 100), "High Score: " + str(score))
     scoreBoard.setSize(9)
     scoreBoard.draw(win)
 
-    return (e, b)
+    return (e, b, cover)
 
 def loadHighScore(user):
     scores = open("scores.csv", 'r')
@@ -218,6 +285,7 @@ def loadHighScore(user):
 
 def main():
     code = generateCode()
+    print(code)
     # Initiates the menu
     gameParam = menufunctionality()
 
@@ -228,7 +296,8 @@ def main():
         win = GraphWin("Mastermind", 400, 600)
         # takes the window and creates the board
         # returns the exit an check buttons
-        (e, b) = board(win, gameParam.user, score)
-        functionality(win, e, b, code)
+        usr = gameParam.user
+        (e, b, cover) = board(win, usr, score)
+        functionality(win, e, b, code, cover, usr)
 
 main()

@@ -22,23 +22,26 @@ def menufunctionality():
     title.setStyle('bold')
     title.draw(menu)
 
+    # Sets 'warned' as a local variable of menufunctionality()
+    warned = 0
+
     # Sets up buttons
-    play = Rectangle(Point(100, 140), Point(300, 210))
-    play.draw(menu)
-    play2 = Text(Point(200, 175), 'Play')
-    play2.draw(menu)
-    settings = Rectangle(Point(100, 250), Point(300, 320))
-    settings.draw(menu)
-    settings2 = Text(Point(200, 285), 'Settings')
-    settings2.draw(menu)
-    how2play = Rectangle(Point(100, 360), Point(300, 430))
-    how2play.draw(menu)
-    how2play2 = Text(Point(200, 395), 'How to Play')
-    how2play2.draw(menu)
-    quit = Rectangle(Point(100, 470), Point(300, 540))
-    quit.draw(menu)
-    quit2 = Text(Point(200, 505), 'Quit Game')
-    quit2.draw(menu)
+    one = Rectangle(Point(100, 140), Point(300, 210))
+    one.draw(menu)
+    one2 = Text(Point(200, 175), 'Play')
+    one2.draw(menu)
+    two = Rectangle(Point(100, 250), Point(300, 320))
+    two.draw(menu)
+    two2 = Text(Point(200, 285), 'Settings')
+    two2.draw(menu)
+    three = Rectangle(Point(100, 360), Point(300, 430))
+    three.draw(menu)
+    three2 = Text(Point(200, 395), 'How to Play')
+    three2.draw(menu)
+    four = Rectangle(Point(100, 470), Point(300, 540))
+    four.draw(menu)
+    four2 = Text(Point(200, 505), 'Quit Game')
+    four2.draw(menu)
 
     # Initiate GameParam object
     # To be returned to gameboard.py, detailing user settings
@@ -47,89 +50,146 @@ def menufunctionality():
     # Gets mouse input 
     while True:
         mouse = menu.getMouse()
-        if (play.p1.x < mouse.x and play.p2.x > mouse.x)\
-                and (play.p1.y < mouse.y and play.p2.y > mouse.y):
+        # one at this point is "Play"
+        if (one.p1.x < mouse.x and one.p2.x > mouse.x)\
+                and (one.p1.y < mouse.y and one.p2.y > mouse.y):
             # Changes and adds objects to reflect username selection menu
-            play2.undraw()
-            settings2.setText('Start')
-            how2play2.setText('Cancel')
-            quit.undraw()
-            quit2.undraw()
+            one2.undraw()
+            two2.setText('Start')
+            three2.setText('Cancel')
+            four.undraw()
+            four2.undraw()
             name = Entry(Point(200, 175), 20)
             name.setText('Enter username here')
             name.draw(menu)
+            warned = False
             while True:
                 mouse = menu.getMouse()
-                if (settings.p1.x < mouse.x and settings.p2.x > mouse.x)\
-                        and (settings.p1.y < mouse.y and settings.p2.y > mouse.y):
-                    if name.getText() == 'Enter username here' or name.getText() == '':
+                # two at this point is "Start"
+                if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
+                        and (two.p1.y < mouse.y and two.p2.y > mouse.y):
+                    if name.getText() == 'Enter username here' or name.getText() == '))':
 
                         # Displays reminder for user to enter username
-                        warn = Text(Point(200, 200), 'Enter a username')
-                        warn.setTextColor('red')
-                        warn.draw(menu)
-                        warned = 1
+                        if warned == False:
+                            warn = Text(Point(200, 200), 'Enter a username')
+                            warn.setTextColor('red')
+                            warn.draw(menu)
+                            warned = True
                     else:
                         param.setUser(name.getText())
                         menu.close()
                         return param
-                if (how2play.p1.x < mouse.x and how2play.p2.x > mouse.x)\
-                        and (how2play.p1.y < mouse.y and how2play.p2.y > mouse.y):
+                # three at this point is "Cancel"
+                if (three.p1.x < mouse.x and three.p2.x > mouse.x)\
+                        and (three.p1.y < mouse.y and three.p2.y > mouse.y):
                     name.undraw()
-                    play2.draw(menu)
+                    one2.draw(menu)
                     if (warned):
                         warn.undraw()
-                    settings2.setText('Settings')
-                    quit2.setText('Quit Game')
+                    two2.setText('Settings')
+                    three2.setText('How to Play')
+                    four.draw(menu)
+                    four2.draw(menu)
                     break
             continue
-        if (settings.p1.x < mouse.x and settings.p2.x > mouse.x)\
-                 and (settings.p1.y < mouse.y and settings.p2.y > mouse.y):
+
+        # two at this point is "Settings"
+        if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
+                 and (two.p1.y < mouse.y and two.p2.y > mouse.y):
             # if settings menu is chosen, will display difficulty options
-            play2.setText('Easy')
-            settings2.setText('Medium')
-            how2play2.setText('Hard')
-            quit2.setText('Back')
+            one2.setText('Easy')
+            two2.setText('Medium')
+            three2.setText('Hard')
+            four2.setText('Back')
             while True:
                 # Highlights one of three choices based on selection
                 if param.difficulty == 0:
-                    play.setOutline('green')
-                    settings.setOutline('black')
-                    how2play.setOutline('black')
+                    one.setOutline('green')
+                    two.setOutline('black')
+                    three.setOutline('black')
                 elif param.difficulty == 1:
-                    play.setOutline('black')
-                    settings.setOutline('green')
-                    how2play.setOutline('black')
+                    one.setOutline('black')
+                    two.setOutline('green')
+                    three.setOutline('black')
                 else:
-                    play.setOutline('black')
-                    settings.setOutline('black')
-                    how2play.setOutline('green')
+                    one.setOutline('black')
+                    two.setOutline('black')
+                    three.setOutline('green')
                 mouse = menu.getMouse()
                 # Checking which difficulty is clicked or back to main menu
-                if (play.p1.x < mouse.x and play.p2.x > mouse.x)\
-                        and (play.p1.y < mouse.y and play.p2.y > mouse.y):
+                # one at this point is "Easy"
+                if (one.p1.x < mouse.x and one.p2.x > mouse.x)\
+                        and (one.p1.y < mouse.y and one.p2.y > mouse.y):
                     param.setDifficulty(0)
-                if (settings.p1.x < mouse.x and settings.p2.x > mouse.x)\
-                        and (settings.p1.y < mouse.y and settings.p2.y > mouse.y):
+                # two at this point is "Medium"
+                if (two.p1.x < mouse.x and two.p2.x > mouse.x)\
+                        and (two.p1.y < mouse.y and two.p2.y > mouse.y):
                     param.setDifficulty(1)
-                if (how2play.p1.x < mouse.x and how2play.p2.x > mouse.x)\
-                        and (how2play.p1.y < mouse.y and how2play.p2.y > mouse.y):
+                # three at this point is "Hard"
+                if (three.p1.x < mouse.x and three.p2.x > mouse.x)\
+                        and (three.p1.y < mouse.y and three.p2.y > mouse.y):
                     param.setDifficulty(2)
-                if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
-                        and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
+                # four at this point is "Back"
+                if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
+                        and (four.p1.y < mouse.y and four.p2.y > mouse.y):
                     # Reset to main menu
-                    play.setOutline('black')
-                    settings.setOutline('black')
-                    how2play.setOutline('black')
-                    quit.setOutline('black')
-                    play2.setText('Play')
-                    settings2.setText('Settings')
-                    how2play2.setText('How to Play')
-                    quit2.setText('Quit Game')
+                    one.setOutline('black')
+                    two.setOutline('black')
+                    three.setOutline('black')
+                    four.setOutline('black')
+                    one2.setText('Play')
+                    two2.setText('Settings')
+                    three2.setText('How to Play')
+                    four2.setText('Quit Game')
                     break
             continue
-        if (quit.p1.x < mouse.x and quit.p2.x > mouse.x)\
-                and (quit.p1.y < mouse.y and quit.p2.y > mouse.y):
+
+        # three at this point is "How to Play"
+        if (three.p1.x < mouse.x and three.p2.x > mouse.x)\
+                and (three.p1.y < mouse.y and three.p2.y > mouse.y):
+            one.undraw()
+            one2.undraw()
+            two.undraw()
+            two2.undraw()
+            three.undraw()
+            three2.undraw()
+            four2.setText('Back')
+            howto = Text(Point(200, 285), """
+How to Play: Mastermind
+
+There is a code of four colored pegs hidden beneath the green on the board.
+Guess the colors of a code of four pegs.
+Click the check button to score your guess.
+
+The small pegs on the right indicate the correctness of your guess.
+White pegs represent a correct color, but in the wrong place.
+Black pegs represent a correct color and correct placement.
+The pegs show up in no particular order.
+
+You have 12 tries.
+Good Luck!
+""")
+            howto.draw(menu)
+            while True:
+                # four at this point is "Back"
+                mouse = menu.getMouse()
+                if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
+                        and (four.p1.y < mouse.y and four.p2.y > mouse.y):
+                    one.draw(menu)
+                    one2.draw(menu)
+                    two.draw(menu)
+                    two2.draw(menu)
+                    three.draw(menu)
+                    three2.draw(menu)
+                    four2.setText('Quit Game')
+                    howto.undraw()
+                    break
+            continue
+
+        # four at this point is "Quit"
+        if (four.p1.x < mouse.x and four.p2.x > mouse.x)\
+                and (four.p1.y < mouse.y and four.p2.y > mouse.y):
             param.setQuitting()
             menu.close()
             return param
