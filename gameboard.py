@@ -288,7 +288,7 @@ def main():
     gameParam = menufunctionality()
 
     # generates new random code
-    code = generateCode(0)
+    code = generateCode(gameParam.difficulty)
     print(code)
 
     # If the user did not click the quit button in the menu
