@@ -20,11 +20,32 @@ class Pin(Enum):
     white = 2
 
 # Generates random code for user to guess
-def generateCode():
+def generateCode(difficulty):
     code = []
-    for i in range(4) :
-        code.append(Peg(random.randrange(1, 7)))
-    return code
+    # difficulty Easy - don't want any blanks, or duplicates
+    if difficulty == 0 :
+        for i in range(4) :
+            peg = Peg(random.randrange(1, 7))
+            while peg in code :
+                peg = Peg(random.randrange(1, 7))
+            code.append(peg)
+        return code
+
+    # difficulty Medium - don't want any blanks, but allow duplicates
+    if difficulty == 1 :
+        for i in range(4) :
+            peg = Peg(random.randrange(1, 7))
+            code.append(peg)
+        return code
+
+
+    # difficulty Hard - allow blanks and duplicates
+    if difficulty == 2 :
+        for i in range(4) :
+            peg = Peg(random.randrange(0, 7))
+            code.append(peg)
+        return code
+
 
 # Scores guess by comparing guess to code using loops
 def scoreGuess(guess,code) :
