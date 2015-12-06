@@ -2,11 +2,12 @@ from graphics import *
 from menu import *
 from mastermind_alg import *
 from users import *
+from scoresystem import *
 
 #class for each playable slot
 class Pegslot(Circle):
     def __init__(self):
-
+		
         location = 0
     def setColor(self, color):
         self.setFill(color)
@@ -25,7 +26,10 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
-def winnerwindow(win, code, cover, winorlose, user):
+def winnerwindow(win, code, cover, winorlose, user, checknum, difficulty):
+    score = score2num(checknum, difficulty)
+    strscore = str(score)
+
     w = Rectangle(Point(100, 125), Point(300, 325))
     w.draw(win)
     w.setFill('white')
@@ -34,6 +38,8 @@ def winnerwindow(win, code, cover, winorlose, user):
 Winner Winner Chicken Dinner
 Username: """ + user.name + """
 Score:
+Username: """ + user + """
+Score: """ + strscore + """
 High Score:
 """)
     elif winorlose == 'lose':
@@ -45,6 +51,12 @@ High Score:
 """)
     winner.setStyle('bold')
     winner.draw(win)
+    re = Rectangle(Point(175, 275), Point(225, 295))
+    re.draw(win)
+    re.setFill('black')
+    ret = Text(Point(200, 285), 'Restart')
+    ret.draw(win)
+    ret.setFill('white')
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
@@ -64,6 +76,8 @@ High Score:
     w4 = Circle(Point(200, 537), 10)
     w4.draw(win)
     w4.setFill(answer[3])
+    # Button to restart game
+    #if (re.p1.x < mouse.x < re.p2.x) and (re.p1.y < mouse.y < re.p2.y)
 
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
@@ -126,13 +140,16 @@ def setscore(score, checknum):
   #  pointer.draw(win)
    # pointer.setFill('white')
 
-def functionality(win, e, b, code, cover, user):
+def functionality(win, e, b, code, cover, user, difficulty):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
     global activeColor
     checknum = 1
 #    pointUpdate(win, checknum)
+
+    # tracks currently selected peg
+    activePeg = redPeg
 
     # functionality to close window when a button is clicked
     while True:
@@ -150,22 +167,40 @@ def functionality(win, e, b, code, cover, user):
         # if color selection is clicked, activeColor variable = color  
         if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
                         (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = redPeg
                     activeColor = 'red'
+                    activePeg.setWidth(3)
         if (orangePeg.p1.x < mouse.x and orangePeg.p1.y < mouse.y) and\
                         (orangePeg.p2.x > mouse.x and orangePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = orangePeg
                     activeColor = 'orange'
+                    activePeg.setWidth(3)
         if (yellowPeg.p1.x < mouse.x and yellowPeg.p1.y < mouse.y) and\
                         (yellowPeg.p2.x > mouse.x and yellowPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = yellowPeg
                     activeColor = 'yellow'
+                    activePeg.setWidth(3)
         if (greenPeg.p1.x < mouse.x and greenPeg.p1.y < mouse.y) and\
                         (greenPeg.p2.x > mouse.x and greenPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = greenPeg
                     activeColor = 'green'
+                    activePeg.setWidth(3)
         if (bluePeg.p1.x < mouse.x and bluePeg.p1.y < mouse.y) and\
                         (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = bluePeg
                     activeColor = 'blue'
+                    activePeg.setWidth(3)
         if (purplePeg.p1.x < mouse.x and purplePeg.p1.y < mouse.y) and\
                         (purplePeg.p2.x > mouse.x and purplePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = purplePeg
                     activeColor = 'purple'
+                    activePeg.setWidth(3)
 
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
@@ -175,8 +210,9 @@ def functionality(win, e, b, code, cover, user):
             if(black == 4):
                 winnerwindow(win, code, cover, 'win', user)
                 user.newScore(score)
+                winnerwindow(win, code, cover, 'win', user, checknum, difficulty)
             if(checknum == 12):
-                winnerwindow(win, code, cover, 'lose', user)
+                winnerwindow(win, code, cover, 'lose', user, checknum, difficulty)
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
 
@@ -271,13 +307,39 @@ def board(win, user):
     scoreBoard.setSize(9)
     scoreBoard.draw(win)
 
+    # Box for displaying difficulty setting on gameboard
+    dif = ""
+    if diffic == 0:
+        dif = "Easy"
+    elif diffic == 1:
+        dif = "Medium"
+    else:
+        dif = "Hard"
+    diff = Text(Point(295, 120), "Difficulty: " + dif)
+    diff.setSize(9)
+    diff.draw(win)
+
     return (e, b, cover)
 
+def loadHighScore(user):
+    scores = open("scores.csv", 'r')
+    highScore = 0
+    for line in scores:
+        userInfo = line.split(',')
+        if userInfo[0] == user:
+            for i in range(1,len(userInfo)):
+                currScore = int(userInfo[i])
+                if currScore > highScore:
+                    highScore = currScore
+    return highScore
+
 def main():
-    code = generateCode()
-    print(code)
     # Initiates the menu
     gameParam = menufunctionality()
+
+    # generates new random code
+    code = generateCode(gameParam.difficulty)
+    print(code)
 
     # If the user did not click the quit button in the menu
     if (gameParam.quitting != 1):
