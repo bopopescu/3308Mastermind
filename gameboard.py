@@ -44,6 +44,7 @@ High Score:
 """)
     winner.setStyle('bold')
     winner.draw(win)
+    re = Rectangle(
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
