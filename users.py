@@ -3,7 +3,7 @@ class User():
     def __init__(self, name):
         self.name = name
         self.highScore = loadHighScore(self.name)
-        self.difficulty = loadDifficulty(self.name)
+        self.difficulty = int(loadDifficulty(self.name))
     def newScore(self, score):
         addScore(self, score)
     def changeDifficulty(self, difficulty):
@@ -53,7 +53,8 @@ def addScore(self, score):
             scoreFile += (',' + str(score))
             success = 1
     if(success != 1):
-        scoreFile += self.name + ',' + self.difficulty + ',' + score
+        scoreFile += '\n' + self.name + ',' + str(self.difficulty) + ',' + str(score)
+        print(scoreFile)
     overwriteScoreFile(scoreFile)
 
 def overwriteScoreFile(fileContents):

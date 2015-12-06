@@ -26,8 +26,8 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
-def winnerwindow(win, code, cover, winorlose, user, checknum, difficulty):
-    score = score2num(checknum, difficulty)
+def winnerwindow(win, code, cover, winorlose, user, checknum):
+    score = score2num(checknum, user.difficulty)
     strscore = str(score)
 
     w = Rectangle(Point(100, 125), Point(300, 325))
@@ -37,18 +37,17 @@ def winnerwindow(win, code, cover, winorlose, user, checknum, difficulty):
         winner = Text(Point(200, 225), """
 Winner Winner Chicken Dinner
 Username: """ + user.name + """
-Score:
-Username: """ + user + """
 Score: """ + strscore + """
-High Score:
+High Score: """ + str(user.highScore) + """
 """)
     elif winorlose == 'lose':
         winner = Text(Point(200, 225), """
 Better Luck Next Time
 Username
 Score: 0
-High Score:
+High Score: """ + str(user.highScore) + """
 """)
+    user.newScore(score)
     winner.setStyle('bold')
     winner.draw(win)
     re = Rectangle(Point(175, 275), Point(225, 295))
@@ -140,7 +139,7 @@ def setscore(score, checknum):
   #  pointer.draw(win)
    # pointer.setFill('white')
 
-def functionality(win, e, b, code, cover, user, difficulty):
+def functionality(win, e, b, code, cover, user):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
@@ -208,11 +207,9 @@ def functionality(win, e, b, code, cover, user, difficulty):
             score = scoreGuess(newguess, code)
             black = setscore(score, checknum)
             if(black == 4):
-                winnerwindow(win, code, cover, 'win', user)
-                user.newScore(score)
-                winnerwindow(win, code, cover, 'win', user, checknum, difficulty)
+                winnerwindow(win, code, cover, 'win', user, checknum)
             if(checknum == 12):
-                winnerwindow(win, code, cover, 'lose', user, checknum, difficulty)
+                winnerwindow(win, code, cover, 'lose', user, checknum)
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
 
@@ -309,11 +306,11 @@ def board(win, user):
 
     # Box for displaying difficulty setting on gameboard
     dif = ""
-    if diffic == 0:
+    if user.difficulty == 0:
         dif = "Easy"
-    elif diffic == 1:
+    elif user.difficulty == 1:
         dif = "Medium"
-    else:
+    elif user.difficulty == 2:
         dif = "Hard"
     diff = Text(Point(295, 120), "Difficulty: " + dif)
     diff.setSize(9)
