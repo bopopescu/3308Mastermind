@@ -1,11 +1,12 @@
 from graphics import *
 from menu import *
 from mastermind_alg import *
+from users import *
 
 #class for each playable slot
 class Pegslot(Circle):
     def __init__(self):
-		
+
         location = 0
     def setColor(self, color):
         self.setFill(color)
@@ -31,7 +32,7 @@ def winnerwindow(win, code, cover, winorlose, user):
     if winorlose == 'win':
         winner = Text(Point(200, 225), """
 Winner Winner Chicken Dinner
-Username: """ + user + """
+Username: """ + user.name + """
 Score:
 High Score:
 """)
@@ -173,6 +174,7 @@ def functionality(win, e, b, code, cover, user):
             black = setscore(score, checknum)
             if(black == 4):
                 winnerwindow(win, code, cover, 'win', user)
+                user.newScore(score)
             if(checknum == 12):
                 winnerwindow(win, code, cover, 'lose', user)
             checknum = checknum + 1
@@ -184,7 +186,7 @@ def functionality(win, e, b, code, cover, user):
             break
 
 # sets up board graphics
-def board(win, user, score):
+def board(win, user):
     # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
@@ -263,25 +265,13 @@ def board(win, user, score):
     e2.draw(win)
 
     # Box for displaying username on gameboard
-    userName = Text(Point(295, 80), "User: " + user)
+    userName = Text(Point(295, 80), "User: " + user.name)
     userName.draw(win)
-    scoreBoard = Text(Point(295, 100), "High Score: " + str(score))
+    scoreBoard = Text(Point(295, 100), "High Score: " + str(user.highScore))
     scoreBoard.setSize(9)
     scoreBoard.draw(win)
 
     return (e, b, cover)
-
-def loadHighScore(user):
-    scores = open("scores.csv", 'r')
-    highScore = 0
-    for line in scores:
-        userInfo = line.split(',')
-        if userInfo[0] == user:
-            for i in range(1,len(userInfo)):
-                currScore = int(userInfo[i])
-                if currScore > highScore:
-                    highScore = currScore
-    return highScore
 
 def main():
     code = generateCode()
@@ -291,13 +281,12 @@ def main():
 
     # If the user did not click the quit button in the menu
     if (gameParam.quitting != 1):
-        score = loadHighScore(gameParam.user)
+        user = User(gameParam.user)
         # setting up window for the game
         win = GraphWin("Mastermind", 400, 600)
         # takes the window and creates the board
         # returns the exit an check buttons
-        usr = gameParam.user
-        (e, b, cover) = board(win, usr, score)
-        functionality(win, e, b, code, cover, usr)
+        (e, b, cover) = board(win, user)
+        functionality(win, e, b, code, cover, user)
 
 main()
