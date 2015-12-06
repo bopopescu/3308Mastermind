@@ -183,16 +183,6 @@ Good Luck!
             param.setQuitting()
             menu.close()
             return param
-            #one2.undraw()
-            #one2.draw(menu)
-            #if (warned):
-                #warn.undraw()
-            #two2.setText('Settings')
-            #three2.setText('How to Play')
-            #four.draw(menu)
-            #four2.draw(menu)
-            #break
-        continue
 
 
 

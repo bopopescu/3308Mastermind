@@ -1,6 +1,7 @@
 from graphics import *
 from menu import *
 from mastermind_alg import *
+from scoresystem import *
 
 #class for each playable slot
 class Pegslot(Circle):
@@ -24,7 +25,10 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
-def winnerwindow(win, code, cover, winorlose, user):
+def winnerwindow(win, code, cover, winorlose, user, checknum, difficulty):
+    score = score2num(checknum, difficulty)
+    strscore = str(score)
+
     w = Rectangle(Point(100, 125), Point(300, 325))
     w.draw(win)
     w.setFill('white')
@@ -32,7 +36,7 @@ def winnerwindow(win, code, cover, winorlose, user):
         winner = Text(Point(200, 225), """
 Winner Winner Chicken Dinner
 Username: """ + user + """
-Score:
+Score: """ + strscore + """
 High Score:
 """)
     elif winorlose == 'lose':
@@ -44,6 +48,12 @@ High Score:
 """)
     winner.setStyle('bold')
     winner.draw(win)
+    re = Rectangle(Point(175, 275), Point(225, 295))
+    re.draw(win)
+    re.setFill('black')
+    ret = Text(Point(200, 285), 'Restart')
+    ret.draw(win)
+    ret.setFill('white')
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
@@ -63,6 +73,8 @@ High Score:
     w4 = Circle(Point(200, 537), 10)
     w4.draw(win)
     w4.setFill(answer[3])
+    # Button to restart game
+    #if (re.p1.x < mouse.x < re.p2.x) and (re.p1.y < mouse.y < re.p2.y)
 
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
@@ -125,7 +137,7 @@ def setscore(score, checknum):
   #  pointer.draw(win)
    # pointer.setFill('white')
 
-def functionality(win, e, b, code, cover, user):
+def functionality(win, e, b, code, cover, user, difficulty):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
@@ -193,11 +205,10 @@ def functionality(win, e, b, code, cover, user):
             score = scoreGuess(newguess, code)
             black = setscore(score, checknum)
             if(black == 4):
-                winnerwindow(win, code, cover, 'win', user)
+                winnerwindow(win, code, cover, 'win', user, checknum, difficulty)
             if(checknum == 12):
-                winnerwindow(win, code, cover, 'lose', user)
+                winnerwindow(win, code, cover, 'lose', user, checknum, difficulty)
             checknum = checknum + 1
- #           pointUpdate(win, checknum)
 
         #check to see if clicked on exit box
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
@@ -205,7 +216,7 @@ def functionality(win, e, b, code, cover, user):
             break
 
 # sets up board graphics
-def board(win, user, score):
+def board(win, user, score, diffic):
     # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
@@ -290,6 +301,18 @@ def board(win, user, score):
     scoreBoard.setSize(9)
     scoreBoard.draw(win)
 
+    # Box for displaying difficulty setting on gameboard
+    dif = ""
+    if diffic == 0:
+        dif = "Easy"
+    elif diffic == 1:
+        dif = "Medium"
+    else:
+        dif = "Hard"
+    diff = Text(Point(295, 120), "Difficulty: " + dif)
+    diff.setSize(9)
+    diff.draw(win)
+
     return (e, b, cover)
 
 def loadHighScore(user):
@@ -320,7 +343,7 @@ def main():
         # takes the window and creates the board
         # returns the exit an check buttons
         usr = gameParam.user
-        (e, b, cover) = board(win, usr, score)
-        functionality(win, e, b, code, cover, usr)
+        (e, b, cover) = board(win, usr, score, gameParam.difficulty)
+        functionality(win, e, b, code, cover, usr, gameParam.difficulty)
 
 main()
