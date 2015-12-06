@@ -184,7 +184,7 @@ def functionality(win, e, b, code, cover, user):
             break
 
 # sets up board graphics
-def board(win, user, score):
+def board(win, user, score, diffic):
     # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
@@ -269,6 +269,18 @@ def board(win, user, score):
     scoreBoard.setSize(9)
     scoreBoard.draw(win)
 
+    # Box for displaying difficulty setting on gameboard
+    dif = ""
+    if diffic == 0:
+        dif = "Easy"
+    elif diffic == 1:
+        dif = "Medium"
+    else:
+        dif = "Hard"
+    diff = Text(Point(295, 120), "Difficulty: " + dif)
+    diff.setSize(9)
+    diff.draw(win)
+
     return (e, b, cover)
 
 def loadHighScore(user):
@@ -299,7 +311,7 @@ def main():
         # takes the window and creates the board
         # returns the exit an check buttons
         usr = gameParam.user
-        (e, b, cover) = board(win, usr, score)
+        (e, b, cover) = board(win, usr, score, gameParam.difficulty)
         functionality(win, e, b, code, cover, usr)
 
 main()
