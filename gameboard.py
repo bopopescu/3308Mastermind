@@ -133,6 +133,9 @@ def functionality(win, e, b, code, cover, user):
     checknum = 1
 #    pointUpdate(win, checknum)
 
+    # tracks currently selected peg
+    activePeg = redPeg
+
     # functionality to close window when a button is clicked
     while True:
         mouse = win.getMouse()  # pause for click in "Exit" button
@@ -149,22 +152,40 @@ def functionality(win, e, b, code, cover, user):
         # if color selection is clicked, activeColor variable = color  
         if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
                         (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = redPeg
                     activeColor = 'red'
+                    activePeg.setWidth(3)
         if (orangePeg.p1.x < mouse.x and orangePeg.p1.y < mouse.y) and\
                         (orangePeg.p2.x > mouse.x and orangePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = orangePeg
                     activeColor = 'orange'
+                    activePeg.setWidth(3)
         if (yellowPeg.p1.x < mouse.x and yellowPeg.p1.y < mouse.y) and\
                         (yellowPeg.p2.x > mouse.x and yellowPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = yellowPeg
                     activeColor = 'yellow'
+                    activePeg.setWidth(3)
         if (greenPeg.p1.x < mouse.x and greenPeg.p1.y < mouse.y) and\
                         (greenPeg.p2.x > mouse.x and greenPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = greenPeg
                     activeColor = 'green'
+                    activePeg.setWidth(3)
         if (bluePeg.p1.x < mouse.x and bluePeg.p1.y < mouse.y) and\
                         (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = bluePeg
                     activeColor = 'blue'
+                    activePeg.setWidth(3)
         if (purplePeg.p1.x < mouse.x and purplePeg.p1.y < mouse.y) and\
                         (purplePeg.p2.x > mouse.x and purplePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = purplePeg
                     activeColor = 'purple'
+                    activePeg.setWidth(3)
 
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
