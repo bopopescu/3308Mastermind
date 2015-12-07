@@ -1,6 +1,9 @@
 from graphics import *
 from menu import *
 from mastermind_alg import *
+from users import *
+from database import *
+from scoresystem import *
 
 #class for each playable slot
 class Pegslot(Circle):
@@ -27,30 +30,36 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
-def winnerwindow(win, code, cover, winorlose, user):
-    """ Causes window to appear telling player they won as well as their username, score, and high score
-   
-        :param win: 
-     """
+def winnerwindow(win, code, cover, winorlose, user, checknum):
+    score = score2num(checknum, user.difficulty)
+    strscore = str(score)
     w = Rectangle(Point(100, 125), Point(300, 325))
     w.draw(win)
     w.setFill('white')
     if winorlose == 'win':
         winner = Text(Point(200, 225), """
 Winner Winner Chicken Dinner
-Username: """ + user + """
-Score:
-High Score:
+Username: """ + user.name + """
+Score: """ + strscore + """
+High Score: """ + str(user.highScore) + """
 """)
     elif winorlose == 'lose':
         winner = Text(Point(200, 225), """
 Better Luck Next Time
 Username
 Score: 0
-High Score:
+High Score: """ + str(user.highScore) + """
 """)
+    user.newScore(score)
+    addHighScoreToDB(user, score)
     winner.setStyle('bold')
     winner.draw(win)
+    re = Rectangle(Point(175, 275), Point(225, 295))
+    re.draw(win)
+    re.setFill('black')
+    ret = Text(Point(200, 285), 'Restart')
+    ret.draw(win)
+    ret.setFill('white')
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
@@ -70,6 +79,7 @@ High Score:
     w4 = Circle(Point(200, 537), 10)
     w4.draw(win)
     w4.setFill(answer[3])
+    return re
 
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
@@ -138,7 +148,11 @@ def functionality(win, e, b, code, cover, user):
     #    b (check button), code (code to be guessed)
     global activeColor
     checknum = 1
+    won = False
 #    pointUpdate(win, checknum)
+
+    # tracks currently selected peg
+    activePeg = redPeg
 
     # functionality to close window when a button is clicked
     while True:
@@ -156,22 +170,40 @@ def functionality(win, e, b, code, cover, user):
         # if color selection is clicked, activeColor variable = color  
         if (redPeg.p1.x < mouse.x and redPeg.p1.y < mouse.y) and\
                         (redPeg.p2.x > mouse.x and redPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = redPeg
                     activeColor = 'red'
+                    activePeg.setWidth(3)
         if (orangePeg.p1.x < mouse.x and orangePeg.p1.y < mouse.y) and\
                         (orangePeg.p2.x > mouse.x and orangePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = orangePeg
                     activeColor = 'orange'
+                    activePeg.setWidth(3)
         if (yellowPeg.p1.x < mouse.x and yellowPeg.p1.y < mouse.y) and\
                         (yellowPeg.p2.x > mouse.x and yellowPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = yellowPeg
                     activeColor = 'yellow'
+                    activePeg.setWidth(3)
         if (greenPeg.p1.x < mouse.x and greenPeg.p1.y < mouse.y) and\
                         (greenPeg.p2.x > mouse.x and greenPeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = greenPeg
                     activeColor = 'green'
+                    activePeg.setWidth(3)
         if (bluePeg.p1.x < mouse.x and bluePeg.p1.y < mouse.y) and\
                         (bluePeg.p2.x > mouse.x and bluePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = bluePeg
                     activeColor = 'blue'
+                    activePeg.setWidth(3)
         if (purplePeg.p1.x < mouse.x and purplePeg.p1.y < mouse.y) and\
                         (purplePeg.p2.x > mouse.x and purplePeg.p2.y > mouse.y):
+                    activePeg.setWidth(1)
+                    activePeg = purplePeg
                     activeColor = 'purple'
+                    activePeg.setWidth(3)
 
         # check to see if check box is clicked
         if b.p1.x < mouse.x < b.p2.x and b.p1.y < mouse.y < b.p2.y:
@@ -179,9 +211,11 @@ def functionality(win, e, b, code, cover, user):
             score = scoreGuess(newguess, code)
             black = setscore(score, checknum)
             if(black == 4):
-                winnerwindow(win, code, cover, 'win', user)
+                re = winnerwindow(win, code, cover, 'win', user, checknum)
+                won = True
             if(checknum == 12):
-                winnerwindow(win, code, cover, 'lose', user)
+                re = winnerwindow(win, code, cover, 'lose', user, checknum)
+                won = True
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
 
@@ -189,9 +223,13 @@ def functionality(win, e, b, code, cover, user):
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
             win.close()
             break
+        if won == True:
+            if re.p1.x < mouse.x < re.p2.x and re.p1.y < mouse.y < re.p2.y:
+                win.close()
+                main()
 
 # sets up board graphics
-def board(win, user, score):
+def board(win, user):
     # takes in win (graphic) and returns e (exit button)
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
@@ -270,11 +308,23 @@ def board(win, user, score):
     e2.draw(win)
 
     # Box for displaying username on gameboard
-    userName = Text(Point(295, 80), "User: " + user)
+    userName = Text(Point(295, 80), "User: " + user.name)
     userName.draw(win)
-    scoreBoard = Text(Point(295, 100), "High Score: " + str(score))
+    scoreBoard = Text(Point(295, 100), "High Score: " + str(user.highScore))
     scoreBoard.setSize(9)
     scoreBoard.draw(win)
+
+    # Box for displaying difficulty setting on gameboard
+    dif = ""
+    if user.difficulty == 0:
+        dif = "Easy"
+    elif user.difficulty == 1:
+        dif = "Medium"
+    elif user.difficulty == 2:
+        dif = "Hard"
+    diff = Text(Point(295, 120), "Difficulty: " + dif)
+    diff.setSize(9)
+    diff.draw(win)
 
     return (e, b, cover)
 
@@ -300,13 +350,12 @@ def main():
 
     # If the user did not click the quit button in the menu
     if (gameParam.quitting != 1):
-        score = loadHighScore(gameParam.user)
+        user = User(gameParam.user)
         # setting up window for the game
         win = GraphWin("Mastermind", 400, 600)
         # takes the window and creates the board
         # returns the exit an check buttons
-        usr = gameParam.user
-        (e, b, cover) = board(win, usr, score)
-        functionality(win, e, b, code, cover, usr)
+        (e, b, cover) = board(win, user)
+        functionality(win, e, b, code, cover, user)
 
 main()
