@@ -7,6 +7,9 @@ from scoresystem import *
 
 #class for each playable slot
 class Pegslot(Circle):
+    """ Class for each playable slot
+    
+    """
     def __init__(self):
 		
         location = 0
@@ -28,6 +31,22 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
 def winnerwindow(win, code, cover, winorlose, user, checknum):
+    """ Displays window telling user they won and shows their username, score, and high score
+    
+    :param win: 
+    :type win:
+    :param code:
+    :type code: array.
+    :param cover:
+    :type cover:
+    :param winorlose:
+    :param user:
+    :type user:
+    :param checknum:
+    :type checknum:
+    :returns:
+    
+    """
     score = score2num(checknum, user.difficulty)
     strscore = str(score)
 
@@ -82,6 +101,13 @@ High Score: """ + str(user.highScore) + """
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
 def numguess(guesscolor):
+    """ Converts guess list of strings to Peg format used in mastermind_alg file
+    
+    :param guesscolor:
+    :type guesscolor:
+    :returns: array.
+    
+    """
     newguess = []
     for j in range(len(guesscolor)):
         if guesscolor[j] == 'red':
@@ -101,6 +127,13 @@ def numguess(guesscolor):
     return newguess
 
 def revnumguess(code):
+    """ What this function does
+    
+    :param code: 
+    :type code: array.
+    :returns: array.
+    
+    """
     newcode = []
     for j in range(len(code)):
         if code[j] == Peg.red:
@@ -126,6 +159,15 @@ def revnumguess(code):
 # black peg: correct color and placement
 # white peg: correct color, wrong placement
 def setscore(score, checknum):
+    """ Takes the score and sets the pins to indicate correctness. Black is right color and placement. White is right color, wrong placement.
+    
+    :param score:
+    :type score:
+    :param checknum:
+    :type checknum:
+    :returns:
+    
+    """
     black = 0
     for j in range(len(score)):
         if score[j] == Pin.black:
