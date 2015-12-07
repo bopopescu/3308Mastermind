@@ -273,9 +273,25 @@ def functionality(win, e, b, code, cover, user):
             if(black == 4):
                 re = winnerwindow(win, code, cover, 'win', user, checknum)
                 won = True
+                 # Button to show leaderboard
+                showLeader = Rectangle(Point(115, 275), Point(195, 295))
+                showLeader.draw(win)
+                showLeader.setFill('black')
+                showLeadert = Text(Point(155, 285), 'Hi-Scores')
+                showLeadert.draw(win)
+                showLeadert.setFill('white')
+
             if(checknum == 12):
                 re = winnerwindow(win, code, cover, 'lose', user, checknum)
-                won = True
+                won = True    
+                # Button to show leaderboard
+                showLeader = Rectangle(Point(115, 275), Point(195, 295))
+                showLeader.draw(win)
+                showLeader.setFill('black')
+                showLeadert = Text(Point(155, 285), 'Hi-Scores')
+                showLeadert.draw(win)
+                showLeadert.setFill('white')
+
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
 
@@ -287,7 +303,7 @@ def functionality(win, e, b, code, cover, user):
             if re.p1.x < mouse.x < re.p2.x and re.p1.y < mouse.y < re.p2.y:
                 win.close()
                 main()
-            if showLeader.p1.x < mouse. x < showLeader.p2.x and\
+            if showLeader.p1.x < mouse.x < showLeader.p2.x and\
                     showLeader.p1.y < mouse.y < showLeader.p2.y:
                 leadbd = GraphWin("Mastermind Leaderboard", 200, 300)
                 # Unable to test right now, so guessing how it's formmated
