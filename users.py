@@ -8,6 +8,7 @@ class User():
         addScore(self, score)
     def changeDifficulty(self, difficulty):
         changeDefaultDifficulty(self, difficulty)
+        self.difficulty = difficulty
 
 def loadHighScore(user):
     scores = open("scores.csv", 'r')
@@ -36,7 +37,8 @@ def changeDefaultDifficulty(self , difficulty):
     for line in scores:
         userInfo = line.split(',')
         if userInfo[0] == self.name:
-            tempLine = line[0: line.find(',')] + difficulty + line[line.find(',', line.find(',') + 1) : len(line)]
+            tempLine = line[0: line.find(',')+1] + str(difficulty) + line[line.find(',', line.find(',') + 1): len(line)]
+            print(tempLine)
             scoreFile += tempLine
         else:
             scoreFile += line

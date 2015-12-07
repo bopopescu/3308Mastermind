@@ -2,6 +2,7 @@ from graphics import *
 from menu import *
 from mastermind_alg import *
 from users import *
+from database import *
 from scoresystem import *
 
 #class for each playable slot
@@ -48,6 +49,7 @@ Score: 0
 High Score: """ + str(user.highScore) + """
 """)
     user.newScore(score)
+    addHighScoreToDB(user, score)
     winner.setStyle('bold')
     winner.draw(win)
     re = Rectangle(Point(175, 275), Point(225, 295))
