@@ -50,12 +50,21 @@ High Score: """ + str(user.highScore) + """
     user.newScore(score)
     winner.setStyle('bold')
     winner.draw(win)
-    re = Rectangle(Point(175, 275), Point(225, 295))
+    re = Rectangle(Point(205, 275), Point(285, 295))
     re.draw(win)
     re.setFill('black')
-    ret = Text(Point(200, 285), 'Restart')
+    ret = Text(Point(245, 285), 'Restart')
     ret.draw(win)
     ret.setFill('white')
+
+    # Button to show leaderboard
+    showLeader = Rectangle(Point(115, 275), Point(195, 295))
+    showLeader.draw(win)
+    showLeader.setFill('black')
+    showLeadert = Text(Point(155, 285), 'Hi-Scores')
+    showLeadert.draw(win)
+    showLeadert.setFill('white')
+
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
