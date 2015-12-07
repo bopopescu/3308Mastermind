@@ -5,6 +5,9 @@ from enum import Enum
 
 # enumerated type to create the colored pegs
 class Peg(Enum):
+    """ Defines the class Peg as enumerated type. The pegs will be used to create codes.
+        
+    """
     matched = -1
     empty = 0
     red = 1
@@ -16,11 +19,21 @@ class Peg(Enum):
 
 # Pins used to score the guess, black=correct color and placement
 class Pin(Enum):
+    """ Defines the class Pin as enumerated type. The pins will be used to score guesses.
+
+    """
     black = 1
     white = 2
 
 # Generates random code for user to guess
 def generateCode(difficulty):
+    """ This function makes a code using 4 pegs catered to the user's difficulty prefrence
+
+        :param difficulty: The level of difficulty the user has chosen.
+        :type difficulty: int.
+        :returns: array containing 4 pegs.
+
+    """
     code = []
     # difficulty Easy - don't want any blanks, or duplicates
     if difficulty == 0 :
@@ -49,6 +62,15 @@ def generateCode(difficulty):
 
 # Scores guess by comparing guess to code using loops
 def scoreGuess(guess,code) :
+    """ Scores the user's guess by comparing it to the real code using loops
+        
+        :param guess: The user's guess.
+        :type guess: array containing 4 guessed pegs.
+        :param code: The generated code the user is trying to guess.
+        :type code: array containing 4 pegs.
+        :returns: array of pins to give the user feedback. 
+
+    """
     guess = guess[:] # copy the guesses since we are going to pull out the matches
     score = []
 

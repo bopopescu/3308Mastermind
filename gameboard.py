@@ -4,6 +4,9 @@ from mastermind_alg import *
 
 #class for each playable slot
 class Pegslot(Circle):
+    """ Class for each playable slot
+    
+    """
     def __init__(self):
 		
         location = 0
@@ -25,6 +28,10 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
 def winnerwindow(win, code, cover, winorlose, user):
+    """ Causes window to appear telling player they won as well as their username, score, and high score
+   
+        :param win: 
+     """
     w = Rectangle(Point(100, 125), Point(300, 325))
     w.draw(win)
     w.setFill('white')
