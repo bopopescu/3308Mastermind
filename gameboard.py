@@ -186,6 +186,22 @@ def functionality(win, e, b, code, cover, user):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
+    """ Handles all the button functionality
+    :param win: 
+    :type win: graphic.
+    :param e:
+    :type e:
+    :param b:
+    :type b:
+    :param code: Code to be guessed.
+    :type code: array.
+    :param cover:
+    :type cover:
+    :param user:
+    :type user:
+    :returns: None.
+    
+    """
     global activeColor
     checknum = 1
     won = False
@@ -271,6 +287,15 @@ def functionality(win, e, b, code, cover, user):
 # sets up board graphics
 def board(win, user):
     # takes in win (graphic) and returns e (exit button)
+    """ Sets up the board graphics
+    
+    :param win:
+    :type win:
+    :param user:
+    :type user:
+    :returns:
+    
+    """
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
     # actual game board
@@ -369,6 +394,13 @@ def board(win, user):
     return (e, b, cover)
 
 def loadHighScore(user):
+    """ Goes to database and finds the user's high score 
+    
+    :param user:
+    :type user:
+    :returns: int -- the user's high score.
+    
+    """
     scores = open("scores.csv", 'r')
     highScore = 0
     for line in scores:
