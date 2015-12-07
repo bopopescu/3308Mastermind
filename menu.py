@@ -1,4 +1,5 @@
 from graphics import *
+from users import *
 
 class GameParam():
     def __init__(self):
@@ -60,6 +61,7 @@ def menufunctionality():
                     warned = True
             else:
                 param.setUser(oneText.getText())
+                activeUser = User(oneText.getText())
                 if (warned):
                     warn.undraw()
                 oneText.undraw()
@@ -92,14 +94,17 @@ def menufunctionality():
                                 one.setOutline('green')
                                 two.setOutline('black')
                                 three.setOutline('black')
+                                activeUser.changeDifficulty(0)
                             elif param.difficulty == 1:
                                 one.setOutline('black')
                                 two.setOutline('green')
                                 three.setOutline('black')
+                                activeUser.changeDifficulty(1)
                             else:
                                 one.setOutline('black')
                                 two.setOutline('black')
                                 three.setOutline('green')
+                                activeUser.changeDifficulty(2)
                             mouse = menu.getMouse()
                             # Checking which difficulty is clicked or back to main menu
                             # one at this point is "Easy"
