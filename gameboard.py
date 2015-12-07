@@ -234,6 +234,13 @@ def functionality(win, e, b, code, cover, user):
             if re.p1.x < mouse.x < re.p2.x and re.p1.y < mouse.y < re.p2.y:
                 win.close()
                 main()
+            if showLeader.p1.x < mouse. x < showLeader.p2.x and\
+                    showLeader.p1.y < mouse.y < showLeader.p2.y:
+                leadbd = GraphWin("Mastermind Leaderboard", 200, 300)
+                # Unable to test right now, so guessing how it's formmated
+                bdscores = pullScoresFromDB()
+                scoreText = Text(Point(100,150), bdscores)
+                scoreText.draw(leadbd)
 
 # sets up board graphics
 def board(win, user):
