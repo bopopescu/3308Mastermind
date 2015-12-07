@@ -75,8 +75,7 @@ High Score: """ + str(user.highScore) + """
     w4 = Circle(Point(200, 537), 10)
     w4.draw(win)
     w4.setFill(answer[3])
-    # Button to restart game
-    #if (re.p1.x < mouse.x < re.p2.x) and (re.p1.y < mouse.y < re.p2.y)
+    return re
 
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
@@ -145,6 +144,7 @@ def functionality(win, e, b, code, cover, user):
     #    b (check button), code (code to be guessed)
     global activeColor
     checknum = 1
+    won = False
 #    pointUpdate(win, checknum)
 
     # tracks currently selected peg
@@ -207,9 +207,11 @@ def functionality(win, e, b, code, cover, user):
             score = scoreGuess(newguess, code)
             black = setscore(score, checknum)
             if(black == 4):
-                winnerwindow(win, code, cover, 'win', user, checknum)
+                re = winnerwindow(win, code, cover, 'win', user, checknum, difficulty)
+                won = True
             if(checknum == 12):
-                winnerwindow(win, code, cover, 'lose', user, checknum)
+                re = winnerwindow(win, code, cover, 'lose', user, checknum, difficulty)
+                won = True
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
 
@@ -217,6 +219,10 @@ def functionality(win, e, b, code, cover, user):
         if e.p1.x < mouse.x < e.p2.x and e.p1.y < mouse.y < e.p2.y:
             win.close()
             break
+        if won == True:
+            if re.p1.x < mouse.x < re.p2.x and re.p1.y < mouse.y < re.p2.y:
+                win.close()
+                main()
 
 # sets up board graphics
 def board(win, user):
