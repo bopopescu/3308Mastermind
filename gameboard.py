@@ -207,10 +207,10 @@ def functionality(win, e, b, code, cover, user):
             score = scoreGuess(newguess, code)
             black = setscore(score, checknum)
             if(black == 4):
-                re = winnerwindow(win, code, cover, 'win', user, checknum, difficulty)
+                re = winnerwindow(win, code, cover, 'win', user, checknum)
                 won = True
             if(checknum == 12):
-                re = winnerwindow(win, code, cover, 'lose', user, checknum, difficulty)
+                re = winnerwindow(win, code, cover, 'lose', user, checknum)
                 won = True
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
