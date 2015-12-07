@@ -33,18 +33,19 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 def winnerwindow(win, code, cover, winorlose, user, checknum):
     """ Displays window telling user they won and shows their username, score, and high score
     
-    :param win: 
-    :type win:
-    :param code:
+    :param win: Current gameboard -- what we draw everything to.
+    :type win: GraphWin
+    :param code: Code user is trying to guess.
     :type code: array.
-    :param cover:
-    :type cover:
-    :param winorlose:
-    :param user:
-    :type user:
-    :param checknum:
-    :type checknum:
-    :returns:
+    :param cover: Green panel covering code.
+    :type cover: Graphics Rectangle.
+    :param winorlose: Says win or lose.
+    :type winorlose: string.
+    :param user: The name of the user.
+    :type user: string.
+    :param checknum: Keeps track of which try they're on.
+    :type checknum: integer.
+    :returns: re -- restart.
     
     """
     score = score2num(checknum, user.difficulty)
@@ -111,9 +112,9 @@ High Score: """ + str(user.highScore) + """
 def numguess(guesscolor):
     """ Converts guess list of strings to Peg format used in mastermind_alg file
     
-    :param guesscolor:
-    :type guesscolor:
-    :returns: array.
+    :param guesscolor: List of strings with the colors. 
+    :type guesscolor: list.
+    :returns: list.
     
     """
     newguess = []
@@ -137,9 +138,9 @@ def numguess(guesscolor):
 def revnumguess(code):
     """ What this function does
     
-    :param code: 
-    :type code: array.
-    :returns: array.
+    :param code: Code the user is trying to guess. 
+    :type code: list.
+    :returns: list.
     
     """
     newcode = []
@@ -169,11 +170,11 @@ def revnumguess(code):
 def setscore(score, checknum):
     """ Takes the score and sets the pins to indicate correctness. Black is right color and placement. White is right color, wrong placement.
     
-    :param score:
-    :type score:
-    :param checknum:
-    :type checknum:
-    :returns:
+    :param score: List from scoreGuess that will get translated to the graphics.
+    :type score: list.
+    :param checknum: The number of guesses the user has checked.
+    :type checknum: integer.
+    :returns: black -- number of black pins.
     
     """
     black = 0
@@ -185,29 +186,24 @@ def setscore(score, checknum):
             guessboard[12 - checknum][j].setFill("white")
     return black
 
-#def pointUpdate(win, checknum):
- #   pointer = Circle(Point(50, 25 + 25 * checknum), 5)
-  #  pointer.draw(win)
-   # pointer.setFill('white')
-
 def functionality(win, e, b, code, cover, user):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
     """ Handles all the button functionality
-    :param win: 
-    :type win: graphic.
-    :param e:
-    :type e:
-    :param b:
-    :type b:
+    :param win: Current gameboard things are being drawn to.
+    :type win: GraphicWin.
+    :param e: The exit button.
+    :type e: Graphics Rectangle.
+    :param b: Check button.
+    :type b: Graphics Rectangle.
     :param code: Code to be guessed.
-    :type code: array.
-    :param cover:
-    :type cover:
-    :param user:
-    :type user:
-    :returns: None.
+    :type code: list.
+    :param cover: Green panel covering the code on the game board.
+    :type cover: Graphics Rectangle.
+    :param user: User's name.
+    :type user: string.
+    :returns: None. 
     
     """
     global activeColor
@@ -304,11 +300,11 @@ def board(win, user):
     # takes in win (graphic) and returns e (exit button)
     """ Sets up the board graphics
     
-    :param win:
-    :type win:
-    :param user:
-    :type user:
-    :returns:
+    :param win: Current gameboard things are drawn to.
+    :type win: GraphicWin.
+    :param user: Name of the user.
+    :type user: string.
+    :returns: e, b, and cover to see if needs to exit, check, or show code by taking away cover.
     
     """
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
