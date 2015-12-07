@@ -31,6 +31,22 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
 def winnerwindow(win, code, cover, winorlose, user, checknum):
+    """ Displays window telling user they won and shows their username, score, and high score
+    
+    :param win: 
+    :type win:
+    :param code:
+    :type code: array.
+    :param cover:
+    :type cover:
+    :param winorlose:
+    :param user:
+    :type user:
+    :param checknum:
+    :type checknum:
+    :returns:
+    
+    """
     score = score2num(checknum, user.difficulty)
     strscore = str(score)
     w = Rectangle(Point(100, 125), Point(300, 325))
@@ -84,6 +100,13 @@ High Score: """ + str(user.highScore) + """
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
 def numguess(guesscolor):
+    """ Converts guess list of strings to Peg format used in mastermind_alg file
+    
+    :param guesscolor:
+    :type guesscolor:
+    :returns: array.
+    
+    """
     newguess = []
     for j in range(len(guesscolor)):
         if guesscolor[j] == 'red':
@@ -103,6 +126,13 @@ def numguess(guesscolor):
     return newguess
 
 def revnumguess(code):
+    """ What this function does
+    
+    :param code: 
+    :type code: array.
+    :returns: array.
+    
+    """
     newcode = []
     for j in range(len(code)):
         if code[j] == Peg.red:
@@ -128,6 +158,15 @@ def revnumguess(code):
 # black peg: correct color and placement
 # white peg: correct color, wrong placement
 def setscore(score, checknum):
+    """ Takes the score and sets the pins to indicate correctness. Black is right color and placement. White is right color, wrong placement.
+    
+    :param score:
+    :type score:
+    :param checknum:
+    :type checknum:
+    :returns:
+    
+    """
     black = 0
     for j in range(len(score)):
         if score[j] == Pin.black:
@@ -146,6 +185,22 @@ def functionality(win, e, b, code, cover, user):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
+    """ Handles all the button functionality
+    :param win: 
+    :type win: graphic.
+    :param e:
+    :type e:
+    :param b:
+    :type b:
+    :param code: Code to be guessed.
+    :type code: array.
+    :param cover:
+    :type cover:
+    :param user:
+    :type user:
+    :returns: None.
+    
+    """
     global activeColor
     checknum = 1
     won = False
@@ -231,6 +286,15 @@ def functionality(win, e, b, code, cover, user):
 # sets up board graphics
 def board(win, user):
     # takes in win (graphic) and returns e (exit button)
+    """ Sets up the board graphics
+    
+    :param win:
+    :type win:
+    :param user:
+    :type user:
+    :returns:
+    
+    """
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
     # actual game board
@@ -329,6 +393,13 @@ def board(win, user):
     return (e, b, cover)
 
 def loadHighScore(user):
+    """ Goes to database and finds the user's high score 
+    
+    :param user:
+    :type user:
+    :returns: int -- the user's high score.
+    
+    """
     scores = open("scores.csv", 'r')
     highScore = 0
     for line in scores:
