@@ -71,10 +71,10 @@ High Score: """ + str(user.highScore) + """
     addHighScoreToDB(user, score)
     winner.setStyle('bold')
     winner.draw(win)
-    re = Rectangle(Point(205, 275), Point(285, 295))
+    re = Rectangle(Point(160, 275), Point(240, 295))
     re.draw(win)
     re.setFill('black')
-    ret = Text(Point(245, 285), 'Restart')
+    ret = Text(Point(200, 285), 'Restart')
     ret.draw(win)
     ret.setFill('white')
 
