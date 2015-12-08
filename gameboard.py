@@ -78,7 +78,6 @@ High Score: """ + str(user.highScore) + """
     ret.draw(win)
     ret.setFill('white')
 
-
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
