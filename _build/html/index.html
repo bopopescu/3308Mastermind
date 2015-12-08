@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Mastermind’s documentation! &mdash; Mastermind 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Mastermind 1.0 documentation" href="#" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-mastermind-s-documentation">
+<h1>Welcome to Mastermind&#8217;s documentation!<a class="headerlink" href="#welcome-to-mastermind-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-mastermind_alg"></span><dl class="function">
+<dt id="mastermind_alg.generateCode">
+<code class="descclassname">mastermind_alg.</code><code class="descname">generateCode</code><span class="sig-paren">(</span><em>difficulty</em><span class="sig-paren">)</span><a class="headerlink" href="#mastermind_alg.generateCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function makes a code using 4 pegs catered to the user&#8217;s difficulty prefrence</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>difficulty</strong> (<em>int.</em>) &#8211; The level of difficulty the user has chosen.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">array containing 4 pegs.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mastermind_alg.scoreGuess">
+<code class="descclassname">mastermind_alg.</code><code class="descname">scoreGuess</code><span class="sig-paren">(</span><em>guess</em>, <em>code</em><span class="sig-paren">)</span><a class="headerlink" href="#mastermind_alg.scoreGuess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scores the user&#8217;s guess by comparing it to the real code using loops</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>guess</strong> (<em>array containing 4 guessed pegs.</em>) &#8211; The user&#8217;s guess.</li>
+<li><strong>code</strong> (<em>array containing 4 pegs.</em>) &#8211; The generated code the user is trying to guess.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">array of pins to give the user feedback.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="module-gameboard"></span><dl class="function">
+<dt id="gameboard.winnerwindow">
+<code class="descclassname">gameboard.</code><code class="descname">winnerwindow</code><span class="sig-paren">(</span><em>win</em>, <em>code</em>, <em>cover</em>, <em>winorlose</em>, <em>user</em>, <em>checknum</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.winnerwindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays window telling user they won and shows their username, score, and high score</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>win</strong> (<em>GraphWin</em>) &#8211; Current gameboard &#8211; what we draw everything to.</li>
+<li><strong>code</strong> (<em>array.</em>) &#8211; Code user is trying to guess.</li>
+<li><strong>cover</strong> (<em>Graphics Rectangle.</em>) &#8211; Green panel covering code.</li>
+<li><strong>winorlose</strong> (<em>string.</em>) &#8211; Says win or lose.</li>
+<li><strong>user</strong> (<em>string.</em>) &#8211; The name of the user.</li>
+<li><strong>checknum</strong> (<em>integer.</em>) &#8211; Keeps track of which try they&#8217;re on.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">re &#8211; restart.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gameboard.numguess">
+<code class="descclassname">gameboard.</code><code class="descname">numguess</code><span class="sig-paren">(</span><em>guesscolor</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.numguess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts guess list of strings to Peg format used in mastermind_alg file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>guesscolor</strong> (<em>list.</em>) &#8211; List of strings with the colors.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gameboard.revnumguess">
+<code class="descclassname">gameboard.</code><code class="descname">revnumguess</code><span class="sig-paren">(</span><em>code</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.revnumguess" title="Permalink to this definition">¶</a></dt>
+<dd><p>What this function does</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>code</strong> (<em>list.</em>) &#8211; Code the user is trying to guess.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gameboard.setscore">
+<code class="descclassname">gameboard.</code><code class="descname">setscore</code><span class="sig-paren">(</span><em>score</em>, <em>checknum</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.setscore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the score and sets the pins to indicate correctness. Black is right color and placement. White is right color, wrong placement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>score</strong> (<em>list.</em>) &#8211; List from scoreGuess that will get translated to the graphics.</li>
+<li><strong>checknum</strong> (<em>integer.</em>) &#8211; The number of guesses the user has checked.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">black &#8211; number of black pins.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gameboard.functionality">
+<code class="descclassname">gameboard.</code><code class="descname">functionality</code><span class="sig-paren">(</span><em>win</em>, <em>e</em>, <em>b</em>, <em>code</em>, <em>cover</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.functionality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles all the button functionality
+:param win: Current gameboard things are being drawn to.
+:type win: GraphicWin.
+:param e: The exit button.
+:type e: Graphics Rectangle.
+:param b: Check button.
+:type b: Graphics Rectangle.
+:param code: Code to be guessed.
+:type code: list.
+:param cover: Green panel covering the code on the game board.
+:type cover: Graphics Rectangle.
+:param user: User&#8217;s name.
+:type user: string.
+:returns: None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gameboard.board">
+<code class="descclassname">gameboard.</code><code class="descname">board</code><span class="sig-paren">(</span><em>win</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.board" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the board graphics</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>win</strong> (<em>GraphicWin.</em>) &#8211; Current gameboard things are drawn to.</li>
+<li><strong>user</strong> (<em>string.</em>) &#8211; Name of the user.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">e, b, and cover to see if needs to exit, check, or show code by taking away cover.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gameboard.loadHighScore">
+<code class="descclassname">gameboard.</code><code class="descname">loadHighScore</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#gameboard.loadHighScore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Goes to database and finds the user&#8217;s high score</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int &#8211; the user&#8217;s high score.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Mastermind&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Rachel Lewis, Sonia Szeton, TJ Romanowski, Tommy Triue.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

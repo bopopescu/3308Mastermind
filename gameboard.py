@@ -7,6 +7,9 @@ from scoresystem import *
 
 #class for each playable slot
 class Pegslot(Circle):
+    """ Class for each playable slot
+    
+    """
     def __init__(self):
 		
         location = 0
@@ -28,9 +31,25 @@ redPeg = orangePeg = yellowPeg = greenPeg = bluePeg = purplePeg = Pegslot
 # Window displayed to tell player they won
 # Also displays username, score for this game, and high score
 def winnerwindow(win, code, cover, winorlose, user, checknum):
+    """ Displays window telling user they won and shows their username, score, and high score
+    
+    :param win: Current gameboard -- what we draw everything to.
+    :type win: GraphWin
+    :param code: Code user is trying to guess.
+    :type code: array.
+    :param cover: Green panel covering code.
+    :type cover: Graphics Rectangle.
+    :param winorlose: Says win or lose.
+    :type winorlose: string.
+    :param user: The name of the user.
+    :type user: string.
+    :param checknum: Keeps track of which try they're on.
+    :type checknum: integer.
+    :returns: re -- restart.
+    
+    """
     score = score2num(checknum, user.difficulty)
     strscore = str(score)
-
     w = Rectangle(Point(100, 125), Point(300, 325))
     w.draw(win)
     w.setFill('white')
@@ -52,12 +71,21 @@ High Score: """ + str(user.highScore) + """
     addHighScoreToDB(user, score)
     winner.setStyle('bold')
     winner.draw(win)
-    re = Rectangle(Point(175, 275), Point(225, 295))
+    re = Rectangle(Point(205, 275), Point(285, 295))
     re.draw(win)
     re.setFill('black')
-    ret = Text(Point(200, 285), 'Restart')
+    ret = Text(Point(245, 285), 'Restart')
     ret.draw(win)
     ret.setFill('white')
+
+    # Button to show leaderboard
+    showLeader = Rectangle(Point(115, 275), Point(195, 295))
+    showLeader.draw(win)
+    showLeader.setFill('black')
+    showLeadert = Text(Point(155, 285), 'Hi-Scores')
+    showLeadert.draw(win)
+    showLeadert.setFill('white')
+
     # Make the "cover" covering the code come back
     cover.undraw()
     coversliv = Rectangle(Point(70, 515), Point(210, 520))
@@ -82,6 +110,13 @@ High Score: """ + str(user.highScore) + """
 # Convert guess list of strings to "Peg" format used in mastermind_alg code
 
 def numguess(guesscolor):
+    """ Converts guess list of strings to Peg format used in mastermind_alg file
+    
+    :param guesscolor: List of strings with the colors. 
+    :type guesscolor: list.
+    :returns: list.
+    
+    """
     newguess = []
     for j in range(len(guesscolor)):
         if guesscolor[j] == 'red':
@@ -101,6 +136,13 @@ def numguess(guesscolor):
     return newguess
 
 def revnumguess(code):
+    """ What this function does
+    
+    :param code: Code the user is trying to guess. 
+    :type code: list.
+    :returns: list.
+    
+    """
     newcode = []
     for j in range(len(code)):
         if code[j] == Peg.red:
@@ -126,6 +168,15 @@ def revnumguess(code):
 # black peg: correct color and placement
 # white peg: correct color, wrong placement
 def setscore(score, checknum):
+    """ Takes the score and sets the pins to indicate correctness. Black is right color and placement. White is right color, wrong placement.
+    
+    :param score: List from scoreGuess that will get translated to the graphics.
+    :type score: list.
+    :param checknum: The number of guesses the user has checked.
+    :type checknum: integer.
+    :returns: black -- number of black pins.
+    
+    """
     black = 0
     for j in range(len(score)):
         if score[j] == Pin.black:
@@ -135,15 +186,26 @@ def setscore(score, checknum):
             guessboard[12 - checknum][j].setFill("white")
     return black
 
-#def pointUpdate(win, checknum):
- #   pointer = Circle(Point(50, 25 + 25 * checknum), 5)
-  #  pointer.draw(win)
-   # pointer.setFill('white')
-
 def functionality(win, e, b, code, cover, user):
     # takes care of all the "button" functionality
     # takes in win (graphic), e (exit button),
     #    b (check button), code (code to be guessed)
+    """ Handles all the button functionality
+    :param win: Current gameboard things are being drawn to.
+    :type win: GraphicWin.
+    :param e: The exit button.
+    :type e: Graphics Rectangle.
+    :param b: Check button.
+    :type b: Graphics Rectangle.
+    :param code: Code to be guessed.
+    :type code: list.
+    :param cover: Green panel covering the code on the game board.
+    :type cover: Graphics Rectangle.
+    :param user: User's name.
+    :type user: string.
+    :returns: None. 
+    
+    """
     global activeColor
     checknum = 1
     won = False
@@ -211,9 +273,25 @@ def functionality(win, e, b, code, cover, user):
             if(black == 4):
                 re = winnerwindow(win, code, cover, 'win', user, checknum)
                 won = True
+                 # Button to show leaderboard
+                showLeader = Rectangle(Point(115, 275), Point(195, 295))
+                showLeader.draw(win)
+                showLeader.setFill('black')
+                showLeadert = Text(Point(155, 285), 'Hi-Scores')
+                showLeadert.draw(win)
+                showLeadert.setFill('white')
+
             if(checknum == 12):
                 re = winnerwindow(win, code, cover, 'lose', user, checknum)
-                won = True
+                won = True    
+                # Button to show leaderboard
+                showLeader = Rectangle(Point(115, 275), Point(195, 295))
+                showLeader.draw(win)
+                showLeader.setFill('black')
+                showLeadert = Text(Point(155, 285), 'Hi-Scores')
+                showLeadert.draw(win)
+                showLeadert.setFill('white')
+
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
 
@@ -225,10 +303,26 @@ def functionality(win, e, b, code, cover, user):
             if re.p1.x < mouse.x < re.p2.x and re.p1.y < mouse.y < re.p2.y:
                 win.close()
                 main()
+            if showLeader.p1.x < mouse.x < showLeader.p2.x and\
+                    showLeader.p1.y < mouse.y < showLeader.p2.y:
+                leadbd = GraphWin("Mastermind Leaderboard", 200, 300)
+                # Unable to test right now, so guessing how it's formmated
+                bdscores = pullScoresFromDB()
+                scoreText = Text(Point(100,150), bdscores)
+                scoreText.draw(leadbd)
 
 # sets up board graphics
 def board(win, user):
     # takes in win (graphic) and returns e (exit button)
+    """ Sets up the board graphics
+    
+    :param win: Current gameboard things are drawn to.
+    :type win: GraphicWin.
+    :param user: Name of the user.
+    :type user: string.
+    :returns: e, b, and cover to see if needs to exit, check, or show code by taking away cover.
+    
+    """
     global redPeg, orangePeg, yellowPeg, greenPeg, bluePeg, purplePeg
 
     # actual game board
@@ -327,6 +421,13 @@ def board(win, user):
     return (e, b, cover)
 
 def loadHighScore(user):
+    """ Goes to database and finds the user's high score 
+    
+    :param user:
+    :type user:
+    :returns: int -- the user's high score.
+    
+    """
     scores = open("scores.csv", 'r')
     highScore = 0
     for line in scores:
