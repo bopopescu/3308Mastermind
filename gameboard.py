@@ -63,7 +63,7 @@ High Score: """ + str(user.highScore) + """
     elif winorlose == 'lose':
         winner = Text(Point(200, 225), """
 Better Luck Next Time
-Username
+Username: """ + user.name + """
 Score: 0
 High Score: """ + str(user.highScore) + """
 """)
@@ -77,14 +77,6 @@ High Score: """ + str(user.highScore) + """
     ret = Text(Point(245, 285), 'Restart')
     ret.draw(win)
     ret.setFill('white')
-
-    # Button to show leaderboard
-    showLeader = Rectangle(Point(115, 275), Point(195, 295))
-    showLeader.draw(win)
-    showLeader.setFill('black')
-    showLeadert = Text(Point(155, 285), 'Hi-Scores')
-    showLeadert.draw(win)
-    showLeadert.setFill('white')
 
     # Make the "cover" covering the code come back
     cover.undraw()
@@ -273,24 +265,10 @@ def functionality(win, e, b, code, cover, user):
             if(black == 4):
                 re = winnerwindow(win, code, cover, 'win', user, checknum)
                 won = True
-                 # Button to show leaderboard
-                showLeader = Rectangle(Point(115, 275), Point(195, 295))
-                showLeader.draw(win)
-                showLeader.setFill('black')
-                showLeadert = Text(Point(155, 285), 'Hi-Scores')
-                showLeadert.draw(win)
-                showLeadert.setFill('white')
 
             if(checknum == 12):
                 re = winnerwindow(win, code, cover, 'lose', user, checknum)
                 won = True    
-                # Button to show leaderboard
-                showLeader = Rectangle(Point(115, 275), Point(195, 295))
-                showLeader.draw(win)
-                showLeader.setFill('black')
-                showLeadert = Text(Point(155, 285), 'Hi-Scores')
-                showLeadert.draw(win)
-                showLeadert.setFill('white')
 
             checknum = checknum + 1
  #           pointUpdate(win, checknum)
@@ -303,13 +281,6 @@ def functionality(win, e, b, code, cover, user):
             if re.p1.x < mouse.x < re.p2.x and re.p1.y < mouse.y < re.p2.y:
                 win.close()
                 main()
-            if showLeader.p1.x < mouse.x < showLeader.p2.x and\
-                    showLeader.p1.y < mouse.y < showLeader.p2.y:
-                leadbd = GraphWin("Mastermind Leaderboard", 200, 300)
-                # Unable to test right now, so guessing how it's formmated
-                bdscores = pullScoresFromDB()
-                scoreText = Text(Point(100,150), bdscores)
-                scoreText.draw(leadbd)
 
 # sets up board graphics
 def board(win, user):
