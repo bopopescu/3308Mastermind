@@ -11,6 +11,18 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+.. automodule:: mastermind_alg
+.. autofunction:: generateCode
+.. autofunction:: scoreGuess
+
+.. automodule:: gameboard
+.. autofunction:: winnerwindow
+.. autofunction:: numguess
+.. autofunction:: revnumguess
+.. autofunction:: setscore
+.. autofunction:: functionality
+.. autofunction:: board
+.. autofunction:: loadHighScore
 
 
 Indices and tables
