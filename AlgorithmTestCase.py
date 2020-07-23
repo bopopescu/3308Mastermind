@@ -7,9 +7,9 @@
 # Univerity of Colorado
 
 import unittest
-from mastermind_alg import *
-#from mastermind_alg import Peg
-#from mastermind_alg import Pin
+from mainmind_alg import *
+#from mainmind_alg import Peg
+#from mainmind_alg import Pin
 
 class AlgorithmTestCase(unittest.TestCase):
 

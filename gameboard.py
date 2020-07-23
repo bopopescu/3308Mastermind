@@ -1,6 +1,6 @@
 from graphics import *
 from menu import *
-from mastermind_alg import *
+from mainmind_alg import *
 from users import *
 from database import *
 from scoresystem import *
@@ -99,10 +99,10 @@ High Score: """ + str(user.highScore) + """
     w4.setFill(answer[3])
     return re
 
-# Convert guess list of strings to "Peg" format used in mastermind_alg code
+# Convert guess list of strings to "Peg" format used in mainmind_alg code
 
 def numguess(guesscolor):
-    """ Converts guess list of strings to Peg format used in mastermind_alg file
+    """ Converts guess list of strings to Peg format used in mainmind_alg file
     
     :param guesscolor: List of strings with the colors. 
     :type guesscolor: list.
@@ -422,7 +422,7 @@ def main():
     if (gameParam.quitting != 1):
         user = User(gameParam.user)
         # setting up window for the game
-        win = GraphWin("Mastermind", 400, 600)
+        win = GraphWin("Mainmind", 400, 600)
         # takes the window and creates the board
         # returns the exit an check buttons
         (e, b, cover) = board(win, user)

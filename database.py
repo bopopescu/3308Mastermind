@@ -3,9 +3,9 @@ import datetime
 from users import *
 
 def pullScoresFromDB():
-    cnx = mysql.connector.connect(user='romanowskitj', password='masterm1nd',
+    cnx = mysql.connector.connect(user='romanowskitj', password='mainm1nd',
                                   host='db4free.net',
-                                  database='mastermind')
+                                  database='mainmind')
     curs = cnx.cursor()
     try:
        curs.execute("SELECT * FROM scores")
@@ -15,9 +15,9 @@ def pullScoresFromDB():
     return curs.fetchall()
 
 def addHighScoreToDB(user, score):
-    cnx = mysql.connector.connect(user='romanowskitj', password='masterm1nd',
+    cnx = mysql.connector.connect(user='romanowskitj', password='mainm1nd',
                                   host='db4free.net',
-                                  database='mastermind')
+                                  database='mainmind')
     curs = cnx.cursor()
     try:
        curs.execute('''INSERT into scores (User, Score, Difficulty, Date)

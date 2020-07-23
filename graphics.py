@@ -64,12 +64,12 @@ class GraphWin(tk.Canvas):
 
     def __init__(self, title="Graphics Window",
                  width=200, height=200, autoflush=True):
-        master = tk.Toplevel(_root)
-        master.protocol("WM_DELETE_WINDOW", self.close)
-        tk.Canvas.__init__(self, master, width=width, height=height)
-        self.master.title(title)
+        main = tk.Toplevel(_root)
+        main.protocol("WM_DELETE_WINDOW", self.close)
+        tk.Canvas.__init__(self, main, width=width, height=height)
+        self.main.title(title)
         self.pack()
-        master.resizable(0,0)
+        main.resizable(0,0)
         self.foreground = "black"
         self.items = []
         self.mouseX = None
@@ -82,7 +82,7 @@ class GraphWin(tk.Canvas):
         self._mouseCallback = None
         self.trans = None
         self.closed = False
-        master.lift()
+        main.lift()
         self.lastKey = ""
         if autoflush: _root.update()
      
@@ -111,7 +111,7 @@ class GraphWin(tk.Canvas):
 
         if self.closed: return
         self.closed = True
-        self.master.destroy()
+        self.main.destroy()
         self.__autoflush()
 
 
@@ -613,7 +613,7 @@ class Entry(GraphicsObject):
     def _draw(self, canvas, options):
         p = self.anchor
         x,y = canvas.toScreen(p.x,p.y)
-        frm = tk.Frame(canvas.master)
+        frm = tk.Frame(canvas.main)
         self.entry = tk.Entry(frm,
                               width=self.width,
                               textvariable=self.text,
@@ -694,10 +694,10 @@ class Image(GraphicsObject):
         self.imageId = Image.idCount
         Image.idCount = Image.idCount + 1
         if len(pixmap) == 1: # file name provided
-            self.img = tk.PhotoImage(file=pixmap[0], master=_root)
+            self.img = tk.PhotoImage(file=pixmap[0], main=_root)
         else: # width and height provided
             width, height = pixmap
-            self.img = tk.PhotoImage(master=_root, width=width, height=height)
+            self.img = tk.PhotoImage(main=_root, width=width, height=height)
                 
     def _draw(self, canvas, options):
         p = self.anchor
